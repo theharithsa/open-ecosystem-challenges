@@ -1,0 +1,82 @@
+name: Create Solution Walkthrough Issues
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  create-walkthrough-issues:
+    if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'new level')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create walkthrough issues
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const LEVELS = { beginner: '🟢', intermediate: '🟡', expert: '🔴' };
+            const LEVEL_ORDER = ['beginner', 'intermediate', 'expert'];
+
+            const { data: files } = await github.rest.pulls.listFiles({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr.number,
+            });
+
+            // Only create issues for newly *added* verify.sh files (= new levels being released)
+            const newLevels = new Map();
+            for (const file of files) {
+              const match = file.filename.match(
+                /^adventures\/((?!planned)[^/]+)\/(beginner|intermediate|expert)\/verify\.sh$/
+              );
+              if (match && file.status === 'added') {
+                const [, adventure, level] = match;
+                if (!newLevels.has(adventure)) newLevels.set(adventure, new Set());
+                newLevels.get(adventure).add(level);
+              }
+            }
+
+            if (newLevels.size === 0) {
+              console.log('No new verify.sh files — skipping.');
+              return;
+            }
+
+            for (const [adventure, levels] of newLevels) {
+              // "03-the-ai-observatory" -> "03: The AI Observatory"
+              const nameMatch = adventure.match(/^(\d+)-(.+)$/);
+              const adventureName = nameMatch
+                ? `${nameMatch[1]}: ${nameMatch[2].replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}`
+                : adventure;
+
+              for (const level of LEVEL_ORDER.filter(l => levels.has(l))) {
+                const emoji = LEVELS[level];
+                const levelName = level.charAt(0).toUpperCase() + level.slice(1);
+
+                await github.rest.issues.create({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  title: `Solution Walkthrough: ${adventureName} — ${emoji} ${levelName}`,
+                  labels: ['solution walkthrough'],
+                  body: [
+                    `## ${adventureName} — ${emoji} ${levelName}`,
+                    '',
+                    `Write a solution walkthrough for the **${levelName}** level of **${adventureName}**.`,
+                    '',
+                    '> ⚠️ **Walkthroughs are only accepted after the challenge deadline has passed.**',
+                    '',
+                    '## How to contribute',
+                    '',
+                    'Comment on this issue to claim it, then follow the [Solution Walkthroughs](https://dynatrace-oss.github.io/open-ecosystem-challenges/contributing/solution-walkthroughs/) guide.',
+                    '',
+                    'A walkthrough can be:',
+                    "- **External content** — a blog post, video, or any public resource. Link to it from the adventure's solutions page.",
+                    `- **In-repo** — a markdown file in \`adventures/${adventure}/docs/solutions/${level}.md\``,
+                    '',
+                    "The most useful walkthroughs explain *why* something was broken and how you'd reason your way to the solution.",
+                    '',
+                    `**Adventure added in:** ${pr.html_url}`,
+                  ].join('\n'),
+                });
+              }
+            }
+

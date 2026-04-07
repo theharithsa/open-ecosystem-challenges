@@ -20,18 +20,47 @@ headaches.
 
 Browse the available adventures and pick one that interests you:
 
-| Name                                                     | 🧠 Learnings                                                                                                                       |
-|----------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------|
-| [Echoes Lost in Orbit](01-echoes-lost-in-orbit/index.md) | <ul><li>Debug GitOps flows</li><li>ApplicationSet pitfalls</li><li>Environment isolation</li><li>Sync, prune & self-heal</li></ul> |
+### February 2026: [The AI Observatory](03-the-ai-observatory/index.md)
 
-More coming soon!
+**Story:** Investigate a mysterious bandwidth anomaly at a remote research station by instrumenting its AI system with OpenTelemetry.
+
+| Level           | Name                                                          | 🧠 Key Learnings                                                                                                                                                                                                                                                                  |
+|-----------------|---------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 🟢 Beginner     | [Calibrating the Lens](03-the-ai-observatory/beginner.md)     | <ul><li>Instrument Python AI apps with [OpenLLMetry](https://github.com/traceloop/openllmetry)</li><li>Analyze traces in [Jaeger](https://www.jaegertracing.io/)</li></ul>                                                                                                        |
+| 🟡 Intermediate | [The Distracted Pilot](03-the-ai-observatory/intermediate.md) | <ul><li>Instrument RAG pipelines with [OpenLLMetry](https://github.com/traceloop/openllmetry)</li><li>Create custom [OpenTelemetry](https://opentelemetry.io/) metrics in Python</li><li>Write PromQL queries & recording rules in [Prometheus](https://prometheus.io/)</li></ul> |
+| 🔴 Expert       | [The Noise Filter](03-the-ai-observatory/expert.md)           | <ul><li>OpenTelemetry GenAI semantic conventions</li><li>Tail sampling in the [OTel Collector](https://opentelemetry.io/docs/collector/)</li></ul>                                                                                                                                |
+
+### January 2026: [Building CloudHaven](02-building-cloudhaven/index.md)
+
+**Story:** Join the Infrastructure Guild and modernize CloudHaven's infrastructure from manual provisioning to a
+self-service platform using Infrastructure as Code.
+
+| Level           | Name                   | 🧠 Key Learnings                                                                                                                                           |
+|-----------------|------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 🟢 Beginner     | The Foundation Stones  | <ul><li>Infrastructure as Code with OpenTofu</li><li>Remote state management with GCS backend</li><li>Dynamic & conditional resources</li></ul>            |
+| 🟡 Intermediate | The Modular Metropolis | <ul><li>OpenTofu module testing with `tofu test`</li><li>Test-Driven Development (TDD) workflow</li><li>Input validation with regex</li></ul>              |
+| 🔴 Expert       | The Guardian Protocols | <ul><li>GitHub Actions for drift detection and plan/apply</li><li>Integration tests with service containers</li><li>Security scanning with Trivy</li></ul> |
+
+### December 2025: [Echoes Lost in Orbit](01-echoes-lost-in-orbit/index.md)
+
+**Story:** Restore interstellar communications by fixing broken GitOps setups, progressive delivery systems, and
+observability pipelines across three galactic missions.
+
+| Level           | Name                              | 🧠 Key Learnings                                                                                                                                                                                                                                                     |
+|-----------------|-----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 🟢 Beginner     | Broken Echoes                     | <ul><li>Debug GitOps flows with Argo CD</li><li>ApplicationSet templating & pitfalls</li><li>Environment isolation & namespaces</li><li>Sync policies: automated, prune & self-heal</li></ul>                                                                        |
+| 🟡 Intermediate | The Silent Canary                 | <ul><li>Progressive delivery with Argo Rollouts</li><li>Canary deployments & automated analysis</li><li>Write PromQL queries for health validation</li><li>Kube-state-metrics for deployment decisions</li></ul>                                                     |
+| 🔴 Expert       | Hyperspace Operations & Transport | <ul><li>Configure OpenTelemetry Collector pipelines</li><li>Spanmetrics connector (traces → metrics)</li><li>Detect "idle canaries" with traffic validation</li><li>Distributed tracing with Jaeger</li><li>Trace-derived metrics for progressive delivery</li></ul> |
+
+More adventures coming soon!
 
 ## 🎮 How It Works
 
-**Each level is independent** - start anywhere, complete in any order. Levels share a connected story but have their own:
+**Each level is independent** - start anywhere, complete in any order. Levels share a connected story but have their
+own:
 
 - Codespace configuration
-- Documentation and guides  
+- Documentation and guides
 - Validation tests
 
 **Levels:**
@@ -58,12 +87,13 @@ No! Each level is independent. Start wherever you feel comfortable.
 Absolutely! Perfect for upskilling, onboarding, internal training, and hackathons.
 
 **Are there costs?**  
-GitHub Codespaces offers free hours per month - usually sufficient for individual use. Check [GitHub's pricing](https://github.com/features/codespaces) for details.
+GitHub Codespaces offers free hours per month - usually sufficient for individual use.
+Check [GitHub's pricing](https://github.com/features/codespaces) for details.
 
 **Need help?**  
-Check adventure-specific docs, [open an issue](https://github.com/dynatrace-oss/open-ecosystem-challenges/issues), or start a [discussion](https://community.open-ecosystem.com/c/challenges).
+Check adventure-specific docs, [open an issue](https://github.com/dynatrace-oss/open-ecosystem-challenges/issues), or
+start a [discussion](https://community.open-ecosystem.com/c/challenges).
 
 ## 🚀 Ready to Start?
 
 [Choose your adventure](#available-adventures) and begin learning!
-

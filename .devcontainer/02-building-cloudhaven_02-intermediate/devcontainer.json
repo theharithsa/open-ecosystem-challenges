@@ -1,0 +1,36 @@
+{
+  "name": "\uD83C\uDF06 Adventure 02 | \uD83D\uDFE1 Intermediate (The Modular Metropolis)",
+  "image": "mcr.microsoft.com/devcontainers/base:bullseye",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/adventures/02-building-cloudhaven/intermediate",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+    }
+  },
+  "postCreateCommand": "bash /workspaces/${localWorkspaceFolderBasename}/.devcontainer/02-building-cloudhaven_02-intermediate/post-create.sh",
+  "postStartCommand": "bash /workspaces/${localWorkspaceFolderBasename}/.devcontainer/02-building-cloudhaven_02-intermediate/post-start.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "OpenTofu.vscode-opentofu",
+        "fabiospampinato.vscode-todo-plus"
+      ]
+    },
+    "codespaces": {
+      "openFiles": [
+        "adventures/02-building-cloudhaven/README.md"
+      ]
+    }
+  },
+  "forwardPorts": [
+    30104
+  ],
+  "portsAttributes": {
+    "30104": {
+      "label": "GCP API Mock",
+      "onAutoForward": "notify"
+    }
+  },
+  "otherPortsAttributes": {
+    "onAutoForward": "ignore"
+  }
+}

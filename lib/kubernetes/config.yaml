@@ -1,0 +1,41 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: open-ecosystem-challenge
+nodes:
+- role: control-plane
+  # Just add all port mappings that might be necessary for a challenge
+  extraPortMappings:
+    # ArgoCD
+  - hostPort: 30100
+    containerPort: 30100
+    protocol: TCP
+    # Skipping port 30101 because the Argo rollouts dashboard is exposed as a port forward
+    # Prometheus
+  - hostPort: 30102
+    containerPort: 30102
+    protocol: TCP
+    # Jaeger
+  - hostPort: 30103
+    containerPort: 30103
+    protocol: TCP
+    # Skipping port 30104 because the GCP API is not running inside the cluster
+    # Ollama
+  - hostPort: 30105
+    containerPort: 30105
+    protocol: TCP
+    # OTel Collector gRPC
+  - hostPort: 30106
+    containerPort: 30106
+    protocol: TCP
+    # OTel Collector HTTP
+  - hostPort: 30107
+    containerPort: 30107
+    protocol: TCP
+    # Qdrant HTTP
+  - hostPort: 30108
+    containerPort: 30108
+    protocol: TCP
+    # Qdrant gRPC
+  - hostPort: 30109
+    containerPort: 30109
+    protocol: TCP

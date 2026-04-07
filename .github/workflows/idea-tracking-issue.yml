@@ -1,0 +1,63 @@
+name: Create Adventure Idea Tracking Issue
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  create-tracking-issue:
+    if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'adventure idea')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create tracking issue
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+
+            const { data: files } = await github.rest.pulls.listFiles({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr.number,
+            });
+
+            // Only proceed if a file was *added* to ideas/ (not modified or deleted)
+            const ideaFile = files.find(f =>
+              f.status === 'added' &&
+              f.filename.startsWith('ideas/') &&
+              !f.filename.startsWith('ideas/.implemented/') &&
+              f.filename.split('/').length === 2 &&
+              f.filename !== 'ideas/adventure-idea-template.md' &&
+              f.filename.endsWith('.md')
+            );
+            if (!ideaFile) {
+              console.log('No new idea file added — skipping.');
+              return;
+            }
+
+            // Extract adventure name from PR title: "Adventure Idea: Name" -> "Name"
+            const titleMatch = pr.title.match(/^Adventure Idea:\s*(.+)$/i);
+            const adventureName = titleMatch ? titleMatch[1].trim() : pr.title;
+            const fileUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/blob/main/${ideaFile.filename}`;
+
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Build Adventure: ${adventureName}`,
+              labels: ['adventure idea', 'help wanted'],
+              body: [
+                `## ${adventureName}`,
+                '',
+                'An adventure idea has been approved and is ready to be built! 🎉',
+                '',
+                `**Idea:** [\`${ideaFile.filename}\`](${fileUrl})`,
+                `**Approved in:** ${pr.html_url}`,
+                '',
+                '## Want to build it?',
+                '',
+                'Comment on this issue to claim it, then follow the [Building Adventures](https://dynatrace-oss.github.io/open-ecosystem-challenges/contributing/adventures/) guide.',
+                '',
+                '**Each level should be a separate PR.** Reference this issue with `Part of #<issue>` in earlier PRs and `Closes #<issue>` in the final one.',
+              ].join('\n'),
+            });
+

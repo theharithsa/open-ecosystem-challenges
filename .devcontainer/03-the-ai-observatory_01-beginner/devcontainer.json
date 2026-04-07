@@ -1,0 +1,43 @@
+{
+  "name": "🔭 Adventure 03 | 🟢 Beginner (Calibrating the Lens)",
+  "image": "mcr.microsoft.com/devcontainers/base:bullseye",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/adventures/03-the-ai-observatory/beginner",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.12"
+    }
+  },
+  "containerEnv": {
+    "TRACELOOP_METRICS_ENABLED": "false"
+  },
+  "postCreateCommand": "bash /workspaces/${localWorkspaceFolderBasename}/.devcontainer/03-the-ai-observatory_01-beginner/post-create.sh",
+  "postStartCommand": "bash /workspaces/${localWorkspaceFolderBasename}/.devcontainer/03-the-ai-observatory_01-beginner/post-start.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": [],
+      "settings": {
+        "python.languageServer": "None",
+        "python.analysis.indexing": false
+      }
+    },
+    "codespaces": {
+      "openFiles": [
+        "adventures/03-the-ai-observatory/README.md"
+      ],
+      "permissions": {
+        "codespaces": "write"
+      }
+    }
+  },
+  "forwardPorts": [],
+  "portsAttributes": {
+    "30103": {
+      "label": "Jaeger",
+      "onAutoForward": "notify"
+    }
+  },
+  "otherPortsAttributes": {
+    "onAutoForward": "ignore"
+  }
+}

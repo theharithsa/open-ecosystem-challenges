@@ -1,0 +1,32 @@
+name: Improvement
+description: Suggest an improvement or enhancement
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What could be improved?
+      description: Describe the improvement you have in mind.
+      placeholder: "e.g. The beginner guide for Adventure 01 doesn't explain what Kustomize overlays are, which makes the first objective confusing."
+    validations:
+      required: true
+  - type: textarea
+    id: where
+    attributes:
+      label: Where?
+      description: Link to the relevant page, file, or adventure level.
+      placeholder: "e.g. https://dynatrace-oss.github.io/open-ecosystem-challenges/01-echoes-lost-in-orbit/beginner"
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why would this help?
+      description: What problem does this solve or what value does it add?
+      placeholder: "e.g. Participants without a Kubernetes background get stuck here and there's no hint pointing them in the right direction."
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Any other approaches you thought about?
+      placeholder: "e.g. Linking to the Kustomize docs would also work, but a short inline explanation would be less disruptive."

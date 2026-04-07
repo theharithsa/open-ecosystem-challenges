@@ -9,6 +9,18 @@ Wednesday, 10 December 2025 at 09:00 CET
 > ℹ️ You can still complete the challenge after this date, but points will only be awarded for submissions before the
 > deadline.
 
+## 📝 Solution Walkthrough
+
+> ⚠️ **Spoiler Alert:** The following walkthrough contains the full solution to the challenge. We encourage you to try solving it on your own first. Consider coming back here only if you get stuck or want to check your approach.
+
+Need help restoring multi-environment delivery? Follow the [step-by-step beginner solution walkthrough](./solutions/beginner.md) to learn how to:
+
+- Investigate the Argo CD ApplicationSet and spot common pitfalls
+- Adjust the Argo CD ApplicationSet to meet the challenge objective
+- Understand the reasoning behind each change, not just the commands
+
+The guide is written to explain not just what to do, but why. Dive in and level up your GitOps skills!
+
 ## 💬 Join the discussion
 
 Share your solutions and questions in
@@ -68,7 +80,7 @@ Your Codespace comes pre-configured with the following tools to help you solve t
 - Open the **Ports** tab in the bottom panel
 - Find the Argo CD row (port `30100`) and click the forwarded address
 
-  ![Ports](./images/ports.png)
+  ![Ports](./images/ports-beginner.png)
 
 - Log in using:
   ```
@@ -122,5 +134,5 @@ For comprehensive validation and to officially claim completion:
 3. **Share your success** with
    the [community](https://community.open-ecosystem.com/t/adventure-01-echoes-lost-in-orbit-easy-broken-echoes/117)
 
-> 📖 **Need detailed verification instructions?** Check out the [Verification Guide](../../verification.md) for
+> 📖 **Need detailed verification instructions?** Check out the [Verification Guide](../../verification) for
 > step-by-step instructions on both smoke tests and GitHub Actions workflows.
