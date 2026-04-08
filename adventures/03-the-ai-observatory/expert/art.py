@@ -1,13 +1,11 @@
 import ollama
-from contextlib import contextmanager
 
 # OpenLLMetry
 from traceloop.sdk import Traceloop
-from traceloop.sdk.decorators import workflow, task
+from traceloop.sdk.instruments import Instruments
 
 # OpenTelemetry
 from opentelemetry import metrics, trace
-from opentelemetry.trace import StatusCode
 
 tracer = trace.get_tracer(__name__)
 
@@ -71,11 +69,18 @@ class Art:
             self.vector_store = None
 
         # Initialize OpenLLMetry with auto-instrumentation
-        # OpenLLMetry automatically instruments LangChain, Qdrant, and other supported libraries
+        # Keep Traceloop as the OTLP bootstrapper, but block duplicate library spans.
         Traceloop.init(
             app_name="art",
             api_endpoint=OTEL_COLLECTOR_HOST,
-            disable_batch=True
+            disable_batch=True,
+            block_instruments={
+                Instruments.LANGCHAIN,
+                Instruments.OLLAMA,
+                Instruments.QDRANT,
+                Instruments.REQUESTS,
+                Instruments.URLLIB3,
+            },
         )
 
         # Initialize OpenTelemetry Meter ('art.rag.retrieval.count')
@@ -86,7 +91,6 @@ class Art:
             unit="1"
         )
 
-    @task(name="rag.retrieve_context")
     def retrieve_context(self, user_input: str):
         """Retrieves relevant context from the vector database."""
 
@@ -136,10 +140,9 @@ User Question: {user_input}
 Answer:"""
 
         with tracer.start_as_current_span(f"chat {MODEL_NAME}") as span:
-            span.set_attribute("llm.model", MODEL_NAME)
-            span.set_attribute("llm.provider", "ollama")
-            span.set_attribute("llm.request.type", "chat")
-            span.set_attribute("llm.prompt.length", len(prompt))
+            span.set_attribute("gen_ai.operation.name", "chat")
+            span.set_attribute("gen_ai.provider.name", "ollama")
+            span.set_attribute("gen_ai.request.model", MODEL_NAME)
 
             response = self.client.chat(
                 model=MODEL_NAME,
@@ -150,12 +153,21 @@ Answer:"""
             )
 
             response_text = response["message"]["content"]
+            input_tokens = response.get("prompt_eval_count")
+            output_tokens = response.get("eval_count")
 
-            span.set_attribute("llm.response.length", len(response_text))
+            if input_tokens is not None:
+                span.set_attribute("gen_ai.usage.input_tokens", input_tokens)
+
+            if output_tokens is not None:
+                span.set_attribute("gen_ai.usage.output_tokens", output_tokens)
+
+            response_model = response.get("model")
+            if response_model:
+                span.set_attribute("gen_ai.response.model", response_model)
 
         return response_text
 
-    @workflow(name="rag.pipeline")
     def get_response(self, user_input: str):
         if not self.vector_store:
             return "Error: Memory offline."
