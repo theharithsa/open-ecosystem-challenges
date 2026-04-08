@@ -1,12 +1,24 @@
 #!/usr/bin/env python3
 import ollama
 import base64
+from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
 from rich.console import Console
 from rich.panel import Panel
+from traceloop.sdk import Traceloop
+from traceloop.sdk.instruments import Instruments
 
 # --- Configuration ---
 OLLAMA_HOST = "http://localhost:30105"
+OTLP_ENDPOINT = "http://localhost:30107/v1/traces"
 MODEL_NAME = "qwen2.5:0.5b"
+
+Traceloop.init(
+    app_name="hubsystem.py",
+    disable_batch=True,
+    telemetry_enabled=False,
+    exporter=OTLPSpanExporter(endpoint=OTLP_ENDPOINT),
+    instruments={Instruments.OLLAMA},
+)
 
 SYSTEM_PROMPT = """You are HubSystem, the AI of Research Station Perimeter Alpha. No need to introduce yourself if not explicitly asked.
 
