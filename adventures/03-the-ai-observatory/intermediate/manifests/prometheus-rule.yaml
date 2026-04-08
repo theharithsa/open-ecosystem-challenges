@@ -11,7 +11,7 @@ spec:
       interval: 10s
       rules:
         - record: art:distraction_ratio
-          expr: vector(0)
+          expr: sum(rate(art_rag_retrieval_count_total{category="entertainment"}[5m])) / clamp_min(sum(rate(art_rag_retrieval_count_total[5m])), 1)
           labels:
             description: "Ratio of ART's memory retrievals from entertainment content"
 
