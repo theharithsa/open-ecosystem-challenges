@@ -1,4 +1,4 @@
-package dev.openfeature.demo.java.demo;
+Dpackage dev.openfeature.demo.java.demo;
 
 import dev.openfeature.contrib.providers.flagd.FlagdOptions;
 import dev.openfeature.contrib.providers.flagd.FlagdProvider;
