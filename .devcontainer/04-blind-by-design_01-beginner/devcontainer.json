@@ -1,0 +1,32 @@
+{
+  "name": "🧪 Adventure 04 | 🟢 Beginner (Stand up the lab)",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "workspace",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/adventures/04-blind-by-design/beginner",
+  "postCreateCommand": "bash /workspaces/${localWorkspaceFolderBasename}/.devcontainer/04-blind-by-design_01-beginner/post-create.sh",
+  "postStartCommand": "bash /workspaces/${localWorkspaceFolderBasename}/.devcontainer/04-blind-by-design_01-beginner/post-start.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vscjava.vscode-java-pack",
+        "vmware.vscode-spring-boot",
+        "vscjava.vscode-spring-boot-dashboard",
+        "redhat.vscode-xml"
+      ]
+    },
+    "codespaces": {
+      "openFiles": [
+        "adventures/04-blind-by-design/docs/beginner.md",
+        "adventures/04-blind-by-design/beginner/src/main/java/dev/openfeature/demo/java/demo/Trial.java",
+        "adventures/04-blind-by-design/beginner/flags.json"
+      ]
+    }
+  },
+  "forwardPorts": [8080],
+  "portsAttributes": {
+    "8080": { "label": "Lab (Spring Boot)", "onAutoForward": "notify" }
+  },
+  "otherPortsAttributes": {
+    "onAutoForward": "ignore"
+  }
+}

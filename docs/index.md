@@ -20,6 +20,16 @@ headaches.
 
 Browse the available adventures and pick one that interests you:
 
+### May 2026: [Blind by Design](04-blind-by-design/index.md)
+
+**Story:** The Aletheia Institute's lab has been recording every subject as "untreated" for eight months — the OpenFeature integration was never finished. Wire the SDK, read the chart by cohort, and roll back a misbehaving Phase 3 trial before the next enrollment batch is signed off.
+
+| Level           | Name                                               | 🧠 Key Learnings                                                                                                                                                                                                                                          |
+|-----------------|----------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 🟢 Beginner     | [Stand up the lab](04-blind-by-design/beginner.md) | <ul><li>Wire the [OpenFeature](https://openfeature.dev/) Java SDK into a Spring Boot service</li><li>Configure [flagd](https://flagd.dev/) as a gRPC sidecar provider</li><li>Hot-reload flag definitions from `flags.json` without redeploying</li></ul> |
+| 🟡 Intermediate | Outcome by cohort                                  | <ul><li>OpenFeature targeting rules and evaluation context</li><li>Transaction context and Spring `HandlerInterceptor`</li><li>Audit hooks for per-cohort outcome tracking</li></ul>                                                                      |
+| 🔴 Expert       | Read the chart                                     | <ul><li>OpenTelemetry traces and metrics with OpenFeature hooks</li><li>Custom `ContextSpanHook` for eval context on Tempo spans</li><li>Fractional rollout detection and rollback via [Grafana LGTM](https://grafana.com/)</li></ul>                     |
+
 ### February 2026: [The AI Observatory](03-the-ai-observatory/index.md)
 
 **Story:** Investigate a mysterious bandwidth anomaly at a remote research station by instrumenting its AI system with OpenTelemetry.
