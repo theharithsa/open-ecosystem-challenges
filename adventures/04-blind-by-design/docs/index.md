@@ -18,6 +18,16 @@ OpenFeature is a vendor-neutral standard for feature flags. The reference cloud-
 
 In this adventure, the lab uses OpenFeature exactly the way a real engineering team would: a Spring Boot service holds the SDK client, flagd holds the flag definitions, and the targeting rules in `flags.json` decide what reading every subject ends up with. By the end, you'll have wired the SDK in from scratch, learned to record outcomes by cohort, and rolled back a misbehaving Phase 3 trial without redeploying.
 
+## 🏆 Rewards
+
+Adventure 04 is the **first adventure with rewards**. To be eligible, you must complete **all three levels** before the deadline: **Tuesday, 26 May 2026 at 23:59 CET**.
+
+- 🥇 **1st place:** a 50% voucher for a Linux Foundation certification
+
+Additionally, the **top 3** finishers each receive a **Credly badge** to showcase the achievement.
+
+> ℹ️ Ranking is determined by total points across all three levels. Points per level are awarded by submission order within the active week (100 for the first valid solution, 95 for the second, and so on; late submissions still earn 60). See the [points & ranking rules](https://community.open-ecosystem.com/t/about-the-challenges-category/16) for the full breakdown.
+
 ## 🎮 Choose Your Level
 
 Each level is a standalone challenge with its own Codespace, building on the story while staying technically independent.
@@ -33,10 +43,12 @@ Wire OpenFeature into a Spring Boot service so the lab's `vision_state` reading 
 
 ### 🟡 Intermediate: Outcome by cohort
 
-- **Status:** 🚧 Coming Soon
+- **Status:** ✅ Ready to Play
 - **Topics:** OpenFeature targeting, transaction context, hooks, Spring `HandlerInterceptor`
 
 Add request-scoped context, a global runtime context, an invocation context at the call site, and an audit hook so the lab records the right reading per subject cohort.
+
+[**Start the Intermediate Challenge**](intermediate.md){ .md-button .md-button--primary }
 
 ### 🔴 Expert: Phase 3 — read the chart
 

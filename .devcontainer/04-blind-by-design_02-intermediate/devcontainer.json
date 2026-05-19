@@ -1,0 +1,27 @@
+{
+  "name": "🧪 Adventure 04 | 🟡 Intermediate (Outcome by cohort)",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "workspace",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/adventures/04-blind-by-design/intermediate",
+  "postCreateCommand": "bash /workspaces/${localWorkspaceFolderBasename}/.devcontainer/04-blind-by-design_02-intermediate/post-create.sh",
+  "postStartCommand": "bash /workspaces/${localWorkspaceFolderBasename}/.devcontainer/04-blind-by-design_02-intermediate/post-start.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vscjava.vscode-java-pack",
+        "vmware.vscode-spring-boot",
+        "vscjava.vscode-spring-boot-dashboard"
+      ]
+    },
+    "codespaces": {
+      "openFiles": [
+        "adventures/04-blind-by-design/docs/intermediate.md",
+        "adventures/04-blind-by-design/intermediate/src/main/java/dev/openfeature/demo/java/demo/OpenFeatureConfig.java",
+        "adventures/04-blind-by-design/intermediate/flags.json"
+      ]
+    }
+  },
+  "otherPortsAttributes": {
+    "onAutoForward": "ignore"
+  }
+}

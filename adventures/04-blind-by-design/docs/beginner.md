@@ -45,17 +45,14 @@ Your Codespace comes pre-configured with the following tools to help you solve t
 - [`jq`](https://jqlang.org/): Pretty-prints and filters the JSON evaluation details that come back from the SDK.
 - A **flagd sidecar** — already running in the devcontainer's compose stack on the docker-internal network. The lab reaches it as `flagd:8013`; you don't need to forward its ports to play this challenge.
 
-## ⏰ Deadline
+## 🏆 Rewards
 
-Tuesday, 26 May 2026 at 23:59 CET
-
-> ℹ️ You can still complete the challenge after this date, but points will only be awarded for submissions before the
-> deadline.
+A **50% Linux Foundation certification voucher** for 1st place and **Credly badges** for the top 3 — for players who complete all three levels by **Tuesday, 26 May 2026 at 23:59 CET**. See the [adventure overview](index.md#-rewards) for ranking rules and eligibility details.
 
 ## 💬 Join the discussion
 
 Share your solutions and questions in
-the [challenge thread](TODO)
+the [challenge thread](https://community.open-ecosystem.com/t/wire-openfeature-flagd-into-a-spring-boot-service-with-zero-setup-adventure-04-beginner)
 in the Open Ecosystem Community.
 
 ## ✅ How to Play
@@ -85,6 +82,8 @@ Before you open the forwarded port, start the Spring Boot lab so it is actually 
   ```
 
 The lab boots in the broken state — `Trial` returns the hard-coded `"untreated"` literal — and that is exactly the starting point you want.
+
+> **Set port 8080 to Public.** In the **Ports** tab, right-click port `8080` and set its visibility to **Public** so the forwarded address is accessible in your browser.
 
 ### 3. Access the UI
 
