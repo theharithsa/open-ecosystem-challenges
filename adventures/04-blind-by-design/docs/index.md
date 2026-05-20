@@ -52,7 +52,9 @@ Add request-scoped context, a global runtime context, an invocation context at t
 
 ### 🔴 Expert: Phase 3 — read the chart
 
-- **Status:** 🚧 Coming Soon
+- **Status:** ✅ Ready to Play
 - **Topics:** OpenTelemetry traces + metrics, custom hooks, Grafana LGTM, fractional rollout, OpenFeature OTel hooks
 
 Finish wiring OpenTelemetry through to the Grafana LGTM stack, write a `ContextSpanHook` that puts the merged eval context onto Tempo spans, find the misbehaving Phase 3 amplifier in the dashboard, and roll it back without redeploying.
+
+[**Start the Expert Challenge**](expert.md){ .md-button .md-button--primary }

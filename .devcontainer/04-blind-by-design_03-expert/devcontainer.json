@@ -1,0 +1,37 @@
+{
+  "name": "🧪 Adventure 04 | 🔴 Expert (Read the chart)",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "workspace",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/adventures/04-blind-by-design/expert",
+  "postCreateCommand": "bash /workspaces/${localWorkspaceFolderBasename}/.devcontainer/04-blind-by-design_03-expert/post-create.sh",
+  "postStartCommand": "bash /workspaces/${localWorkspaceFolderBasename}/.devcontainer/04-blind-by-design_03-expert/post-start.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vscjava.vscode-java-pack",
+        "redhat.vscode-yaml",
+        "ms-azuretools.vscode-docker"
+      ]
+    },
+    "codespaces": {
+      "openFiles": [
+        "adventures/04-blind-by-design/docs/expert.md",
+        "adventures/04-blind-by-design/expert/otel.properties",
+        "adventures/04-blind-by-design/expert/src/main/java/dev/openfeature/demo/java/demo/OpenFeatureConfig.java",
+        "adventures/04-blind-by-design/expert/flags.json"
+      ]
+    }
+  },
+  "forwardPorts": [8080, 3000, 4317, 4318, 9090, 3200],
+  "portsAttributes": {
+    "8080": { "label": "Spring Boot lab", "onAutoForward": "notify" },
+    "3000": { "label": "Grafana", "onAutoForward": "notify" },
+    "4317": { "label": "OTLP gRPC", "onAutoForward": "ignore" },
+    "4318": { "label": "OTLP HTTP", "onAutoForward": "ignore" },
+    "9090": { "label": "Prometheus", "onAutoForward": "ignore" },
+    "3200": { "label": "Tempo HTTP API", "onAutoForward": "ignore" }
+  },
+  "otherPortsAttributes": {
+    "onAutoForward": "ignore"
+  }
+}

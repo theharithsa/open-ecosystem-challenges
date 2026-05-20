@@ -1,0 +1,75 @@
+# Multi-container devcontainer for Expert. The lab itself runs in
+# `workspace`; flagd, the Grafana LGTM stack, and the k6 loadgen run as
+# sibling services. No Docker-in-Docker — the devcontainer attaches to
+# `workspace` and the rest of the stack is already up.
+#
+# Inside `workspace`, services are reachable by service name
+# (flagd:8013, lgtm:4317, etc.). FLAGD_HOST and OTEL_EXPORTER_OTLP_ENDPOINT
+# are pre-set so the participant does not have to hard-code hostnames.
+# Codespaces also forwards each port to localhost on the host so verify.sh
+# and curl can keep using localhost:NNNN unchanged.
+
+services:
+  workspace:
+    image: mcr.microsoft.com/devcontainers/java:1-21
+    volumes:
+      - ../..:/workspaces/${localWorkspaceFolderBasename:-open-ecosystem-challenges}:cached
+    command: sleep infinity
+    environment:
+      - FLAGD_HOST=flagd
+      - FLAGD_PORT=8013
+      # OpenTelemetry Java Agent. post-create.sh downloads the jar; the
+      # spring-boot-maven-plugin reads OTEL_JAVAAGENT_JAR for its <jvmArguments>
+      # so only the forked lab JVM is agent-attached (not Maven itself).
+      # Agent config lives in expert/otel.properties — that's the file
+      # players edit to toggle the metrics exporter.
+      - OTEL_JAVAAGENT_JAR=/workspaces/${localWorkspaceFolderBasename:-open-ecosystem-challenges}/tools/opentelemetry-javaagent.jar
+      - OTEL_JAVAAGENT_CONFIGURATION_FILE=/workspaces/${localWorkspaceFolderBasename:-open-ecosystem-challenges}/adventures/04-blind-by-design/expert/otel.properties
+      # Trial country of registration. Read by OpenFeatureConfig via
+      # System.getenv("COUNTRY") and put on the global eval context.
+      - COUNTRY=de
+
+  flagd:
+    image: ghcr.io/open-feature/flagd:v0.15.4
+    volumes:
+      - ../..:/workspaces/${localWorkspaceFolderBasename:-open-ecosystem-challenges}:ro
+    command:
+      - start
+      - --uri
+      - file:/workspaces/${localWorkspaceFolderBasename:-open-ecosystem-challenges}/adventures/04-blind-by-design/expert/flags.json
+    # No `ports:` block — the lab and loadgen reach flagd on the
+    # docker-internal network as `flagd:8013`. Forwarding the flagd
+    # ports onto the Codespace host is not needed to play the level.
+
+  lgtm:
+    image: grafana/otel-lgtm:0.26.0
+    ports:
+      - "3000:3000"     # Grafana UI (admin / admin)
+      - "4317:4317"     # OTLP gRPC
+      - "4318:4318"     # OTLP HTTP
+      - "9090:9090"     # Prometheus query API (verify.sh)
+      - "3200:3200"     # Tempo HTTP API (verify.sh)
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - ../..:/workspaces/${localWorkspaceFolderBasename:-open-ecosystem-challenges}:ro
+      # Dashboard auto-provisioning: otel-lgtm scans /otel-lgtm/grafana/conf/provisioning/dashboards/
+      # for provider YAMLs, then loads dashboard JSONs from whatever path
+      # the provider references. We point at .../custom for both.
+      - ../../adventures/04-blind-by-design/expert/dashboards/provisioning.yaml:/otel-lgtm/grafana/conf/provisioning/dashboards/fun-with-flags.yaml:ro
+      - ../../adventures/04-blind-by-design/expert/dashboards:/otel-lgtm/grafana/conf/provisioning/dashboards/custom:ro
+
+  loadgen:
+    image: grafana/k6:1.7.1
+    command: ["run", "--quiet", "/scripts/script.js"]
+    volumes:
+      - ../../adventures/04-blind-by-design/expert/loadgen/k6:/scripts:ro
+    environment:
+      # The script idles while loadgen_active is "off". Flip it in flags.json
+      # to start hammering the lab.
+      - BASE_URL=http://workspace:8080
+      - FLAGD_URL=http://flagd:8013
+    restart: unless-stopped
+    depends_on:
+      - flagd
