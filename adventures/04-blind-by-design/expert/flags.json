@@ -29,8 +29,8 @@
       "defaultVariant": "off",
       "targeting": {
         "fractional": [
-          ["off", 0],
-          ["on", 100]
+          ["off", 100],
+          ["on", 0]
         ]
       }
     },
@@ -40,7 +40,7 @@
         "off": false,
         "on": true
       },
-      "defaultVariant": "off"
+      "defaultVariant": "on"
     }
   }
 }

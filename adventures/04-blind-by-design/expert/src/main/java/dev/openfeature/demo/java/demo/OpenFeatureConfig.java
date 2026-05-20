@@ -1,7 +1,9 @@
 package dev.openfeature.demo.java.demo;
 
+import dev.openfeature.contrib.hooks.otel.MetricsHook;
 import dev.openfeature.contrib.hooks.otel.TracesHook;
 import dev.openfeature.contrib.providers.flagd.Config;
+import io.opentelemetry.api.GlobalOpenTelemetry;
 import dev.openfeature.contrib.providers.flagd.FlagdOptions;
 import dev.openfeature.contrib.providers.flagd.FlagdProvider;
 import dev.openfeature.sdk.ImmutableContext;
@@ -50,27 +52,8 @@ public class OpenFeatureConfig implements WebMvcConfigurer {
 
         api.addHooks(new AuditHook());
         api.addHooks(new TracesHook());
-        // TODO Phase 3 task #1: register the matching MetricsHook here. Grab
-        // the OTel handle the agent installed via GlobalOpenTelemetry.get()
-        // — the agent already wired the SDK and exporter before main() ran,
-        // but the metrics pipeline stays inert until you also turn on the
-        // metrics exporter in otel.properties (next to pom.xml).
-        //
-        // TODO Phase 3 task #2: write a small ContextSpanHook that copies the
-        // merged evaluation context attributes (species, country, dose) onto the
-        // active OpenTelemetry span — for example as
-        // `feature_flag.context.<key>` — and register it here. Lets you search
-        // Tempo for `feature_flag.context.dose=underdose` and see, on the same
-        // span, which `feature_flag.variant` the lab recorded. Closes the
-        // loop between why an outcome happened and what the chart knew at
-        // the time.
-        //
-        // ⚠️ Use a fixed allowlist of keys; do NOT iterate over the whole
-        // evaluation context. The merged context routinely carries the
-        // OpenFeature targetingKey (often a user id) and, in real apps, things
-        // like email or account identifiers — span attributes are retained
-        // for days in Tempo/Prometheus and are hard to redact after the fact.
-        // See https://opentelemetry.io/docs/security/ for the broader rule.
+        api.addHooks(new MetricsHook(GlobalOpenTelemetry.get()));
+        api.addHooks(new ContextSpanHook());
     }
 
     @Override

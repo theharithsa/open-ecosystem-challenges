@@ -225,7 +225,7 @@ else
 fi
 print_new_line
 
-print_verification_summary "Read the chart" "$DOCS_URL" "$OBJECTIVE"
+check_submission_readiness "04-blind-by-design" "expert"
 
 if [[ $TESTS_FAILED -ne 0 ]]; then
   exit 1
