@@ -17,7 +17,7 @@ OBJECTIVE="By the end of this level, you should have:
   - Error rate thresholds (< 5%)
   - Latency thresholds for the 95th percentile (< 1000ms)"
 
-DOCS_URL="https://dynatrace-oss.github.io/open-ecosystem-challenges/01-echoes-lost-in-orbit/expert"
+DOCS_URL="https://offon.dev/adventures/echoes-lost-in-orbit/levels/expert"
 
 print_header \
   'Challenge 01: Echoes Lost in Orbit' \

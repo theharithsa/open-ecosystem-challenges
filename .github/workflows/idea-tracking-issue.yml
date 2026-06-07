@@ -55,7 +55,7 @@ jobs:
                 '',
                 '## Want to build it?',
                 '',
-                'Comment on this issue to claim it, then follow the [Building Adventures](https://dynatrace-oss.github.io/open-ecosystem-challenges/contributing/adventures/) guide.',
+                'Comment on this issue to claim it, then follow the [Building Adventures](https://github.com/dynatrace-oss/open-ecosystem-challenges/blob/main/CONTRIBUTING.md#build-a-new-adventure) guide.',
                 '',
                 '**Each level should be a separate PR.** Reference this issue with `Part of #<issue>` in earlier PRs and `Closes #<issue>` in the final one.',
               ].join('\n'),

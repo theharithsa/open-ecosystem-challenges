@@ -1,7 +1,0 @@
-site_name: '🌆️ 02: Building CloudHaven'
-
-nav:
-  - Introduction: index.md
-  - '🟢 Beginner': beginner.md
-  - '🟡 Intermediate': intermediate.md
-  - '🔴 Expert': expert.md

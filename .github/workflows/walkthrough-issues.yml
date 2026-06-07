@@ -66,7 +66,7 @@ jobs:
                     '',
                     '## How to contribute',
                     '',
-                    'Comment on this issue to claim it, then follow the [Solution Walkthroughs](https://dynatrace-oss.github.io/open-ecosystem-challenges/contributing/solution-walkthroughs/) guide.',
+                    'Comment on this issue to claim it, then follow the [Solution Walkthroughs](https://github.com/dynatrace-oss/open-ecosystem-challenges/blob/main/CONTRIBUTING.md#write-a-solution-walkthrough) guide.',
                     '',
                     'A walkthrough can be:',
                     "- **External content** — a blog post, video, or any public resource. Link to it from the adventure's solutions page.",

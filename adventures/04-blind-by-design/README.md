@@ -9,4 +9,4 @@ The entire **infrastructure is pre-provisioned in your Codespace**.
 
 ## 🚀 Ready to Start?
 
-[Choose your level](https://dynatrace-oss.github.io/open-ecosystem-challenges/04-blind-by-design/) and begin learning!
+[Choose your level](https://offon.dev/adventures/blind-by-design/) and begin learning!

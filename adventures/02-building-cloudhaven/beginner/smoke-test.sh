@@ -13,7 +13,7 @@ OBJECTIVE="By the end of this level, you should:
 - Store state remotely in a GCS backend following best practices so the Guild can collaborate
 - Resolve all TODOs in the code and successfully run tofu apply"
 
-DOCS_URL="https://dynatrace-oss.github.io/open-ecosystem-challenges/02-building-cloudhaven/beginner"
+DOCS_URL="https://offon.dev/adventures/building-cloudhaven/levels/beginner"
 
 print_header \
   'Challenge 02: Building CloudHaven' \

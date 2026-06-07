@@ -15,7 +15,7 @@ body:
     attributes:
       label: Where?
       description: Link to the relevant page, file, or adventure level.
-      placeholder: "e.g. https://dynatrace-oss.github.io/open-ecosystem-challenges/01-echoes-lost-in-orbit/beginner"
+      placeholder: "e.g. https://offon.dev/adventures/echoes-lost-in-orbit/levels/beginner"
     validations:
       required: true
   - type: textarea

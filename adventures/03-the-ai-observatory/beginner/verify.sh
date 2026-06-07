@@ -5,6 +5,8 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck disable=SC1091
 source "$SCRIPT_DIR/../../../lib/scripts/loader.sh"
+# shellcheck disable=SC1091
+source "$SCRIPT_DIR/../../../lib/scripts/tracker-legacy.sh"
 
 OBJECTIVE="By the end of this level, you should:
 
@@ -13,7 +15,7 @@ OBJECTIVE="By the end of this level, you should:
 - See and analyze traces in Jaeger to find out what causes the high bandwidth usage
 - Provide the correct answer in quiz.txt"
 
-DOCS_URL="https://dynatrace-oss.github.io/open-ecosystem-challenges/03-the-ai-observatory/beginner"
+DOCS_URL="https://offon.dev/adventures/the-ai-observatory/levels/beginner"
 
 print_header \
   'Challenge 03: The AI Observatory' \

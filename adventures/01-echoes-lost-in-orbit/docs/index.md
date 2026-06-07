@@ -40,7 +40,7 @@ independent — pick your level and start wherever you feel comfortable!
 The Echo Server is misbehaving. Both environments seem to be down, and messages are silent. Your mission: investigate
 the ArgoCD configuration and restore proper multi-environment delivery.
 
-[**Start the Beginner Challenge**](./beginner.md){ .md-button .md-button--primary }
+[**Start the Beginner Challenge**](./beginner.md)
 
 ### 🟡 Intermediate: The Silent Canary
 
@@ -51,7 +51,7 @@ After fixing the communication outage, the Intergalactic Union welcomed a new sp
 team attempted to deploy their language files using a progressive delivery system, but the rollout is failing. Your
 mission: debug the broken canary deployment and bring the Zephyrians' voices online.
 
-[**Start the Intermediate Challenge**](./intermediate.md){ .md-button .md-button--primary }
+[**Start the Intermediate Challenge**](./intermediate.md)
 
 ### 🔴 Expert: Echoes in the Dark
 
@@ -62,5 +62,5 @@ After fixing the Zephyrian communications, word of your progressive release mast
 
 They want to apply progressive delivery to their mission-critical service: **HotROD** (Hyperspace Operations & Transport - Rapid Orbital Dispatch), an interstellar ride-sharing service handling dispatch requests across thousands of star systems. Every millisecond of latency matters, and any error could strand travelers between dimensions.
 
-[**Start the Expert Challenge**](./expert.md){ .md-button .md-button--primary }
+[**Start the Expert Challenge**](./expert.md)
 

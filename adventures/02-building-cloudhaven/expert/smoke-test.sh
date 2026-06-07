@@ -12,7 +12,7 @@ OBJECTIVE="By the end of this level, your workflows should:
 - Validate pull requests (run plan, tests, security scans, comment on PR)
 - Apply infrastructure automatically when PR is merged"
 
-DOCS_URL="https://dynatrace-oss.github.io/open-ecosystem-challenges/02-building-cloudhaven/expert"
+DOCS_URL="https://offon.dev/adventures/building-cloudhaven/levels/expert"
 
 print_header \
   'Challenge 02: Building CloudHaven' \

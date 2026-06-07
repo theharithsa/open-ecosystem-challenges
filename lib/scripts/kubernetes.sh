@@ -283,3 +283,72 @@ check_admission_allowed() {
     FAILED_CHECKS+=("admission_allowed:$display_name")
   fi
 }
+
+# Check that a manifest is admitted and has a specific label in the server response.
+# Uses server-side dry-run, which triggers mutation webhooks.
+# Reads manifest YAML from stdin.
+# Usage: check_label_exists "display name" "label-key" "expected-value" "hint" <<EOF ... EOF
+check_label_exists() {
+  local display_name=$1
+  local label_key=$2
+  local expected_value=$3
+  local hint=$4
+
+  print_test_section "Checking $display_name receives label $label_key=$expected_value via mutation..."
+
+  local result
+  if ! result=$(kubectl apply --dry-run=server -f - -o json 2>/dev/null); then
+    print_error_indent "$display_name was rejected at admission (expected to be admitted)"
+    print_hint "$hint"
+    TESTS_FAILED=$((TESTS_FAILED + 1))
+    FAILED_CHECKS+=("label_exists:$display_name")
+    return
+  fi
+
+  local actual_value
+  actual_value=$(echo "$result" | jq -r ".metadata.labels[\"$label_key\"] // empty")
+
+  if [[ "$actual_value" == "$expected_value" ]]; then
+    print_success_indent "$display_name has label $label_key=$expected_value"
+    TESTS_PASSED=$((TESTS_PASSED + 1))
+  else
+    print_error_indent "$display_name was admitted but label '$label_key' was not set to '$expected_value' (got: '${actual_value:-<missing>}')"
+    print_hint "$hint"
+    TESTS_FAILED=$((TESTS_FAILED + 1))
+    FAILED_CHECKS+=("label_exists:$display_name")
+  fi
+}
+
+# Check that a manifest is admitted and does NOT have a specific label in the server response.
+# Uses server-side dry-run, which triggers mutation webhooks.
+# Reads manifest YAML from stdin.
+# Usage: check_label_not_exists "display name" "label-key" "hint" <<EOF ... EOF
+check_label_not_exists() {
+  local display_name=$1
+  local label_key=$2
+  local hint=$3
+
+  print_test_section "Checking $display_name does NOT receive label $label_key..."
+
+  local result
+  if ! result=$(kubectl apply --dry-run=server -f - -o json 2>/dev/null); then
+    print_error_indent "$display_name was rejected at admission (expected to be admitted)"
+    print_hint "$hint"
+    TESTS_FAILED=$((TESTS_FAILED + 1))
+    FAILED_CHECKS+=("label_not_exists:$display_name")
+    return
+  fi
+
+  local label_value
+  label_value=$(echo "$result" | jq -r ".metadata.labels[\"$label_key\"] // empty")
+
+  if [[ -z "$label_value" ]]; then
+    print_success_indent "$display_name was admitted without label $label_key (correct)"
+    TESTS_PASSED=$((TESTS_PASSED + 1))
+  else
+    print_error_indent "$display_name was admitted but unexpectedly has label $label_key=$label_value"
+    print_hint "$hint"
+    TESTS_FAILED=$((TESTS_FAILED + 1))
+    FAILED_CHECKS+=("label_not_exists:$display_name")
+  fi
+}

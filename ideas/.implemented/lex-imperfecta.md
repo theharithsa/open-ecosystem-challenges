@@ -13,7 +13,7 @@ chaos takes hold.
 - Manage and organize policies at scale across teams and environments
 - Respond to runtime threats that bypass static policies
 
-**Technologies:** Kyverno, Falco, Policy Reporter, Argo CD, Kubernetes
+**Technologies:** Kyverno, Falco, Policy Reporter, OpenReports, Argo CD, Kubernetes
 
 ---
 
@@ -35,7 +35,7 @@ Your mission: investigate the Kyverno policies and restore proper admission cont
 
 #### The Problem
 
-Several Kyverno `ClusterPolicy` resources are misconfigured. They are intended to block non-compliant workloads and allow compliant ones through — but they are failing to do so correctly. Some policies are not enforcing when they should, others are rejecting workloads they should allow.
+Several Kyverno `ValidatingPolicy` resources are misconfigured. They are intended to block non-compliant workloads and allow compliant ones through — but they are failing to do so correctly. Some policies are not enforcing when they should, others are rejecting workloads they should allow.
 
 #### Objective
 
@@ -47,8 +47,8 @@ By the end of this level, the learner should:
 
 #### What You'll Learn
 
-- How Kyverno `ClusterPolicies` and `validate` rules work
-- The difference between `Audit` and `Enforce` enforcement modes
+- How Kyverno `ValidatingPolicy` resources and CEL validation expressions work
+- The difference between `Audit`, `Deny`, and `Warn` validation actions
 - How to read and interpret Kyverno policy violations
 
 #### Tools & Infrastructure
@@ -62,7 +62,7 @@ By the end of this level, the learner should:
 
 #### Description
 
-Fix a misconfigured Kyverno policy setup and use Policy Reporter to restore proper governance across teams and namespaces.
+Fix a misconfigured Kyverno policy setup and use Policy Reporter and the OpenReports format to restore proper governance across teams and namespaces.
 
 #### Story
 
@@ -74,7 +74,7 @@ Your mission: investigate the policy estate, fix the scoping issues, and ensure 
 
 #### The Problem
 
-Several Kyverno `ClusterPolicy` and `Policy` resources are misconfigured. They are intended to enforce specific rules across different teams and namespaces — but they are failing to do so correctly. Policies are applying to the wrong provinces, some namespaces are left ungoverned, and exceptions that were meant to be narrow are broader than intended.
+Several Kyverno `ValidatingPolicy` and `NamespacedValidatingPolicy` resources are misconfigured. They are intended to enforce specific rules across different teams and namespaces — but they are failing to do so correctly. Policies are applying to the wrong provinces, some namespaces are left ungoverned, and exceptions that were meant to be narrow are broader than intended.
 
 #### Objective
 
@@ -87,9 +87,9 @@ By the end of this level, the learner should:
 
 #### What You'll Learn
 
-- How to scope Kyverno policies to specific namespaces and teams
+- How to scope policies using `ValidatingPolicy` (cluster-wide) and `NamespacedValidatingPolicy` (per-namespace)
 - How to write and manage policy exceptions correctly
-- How to use Policy Reporter to audit and debug the policy estate
+- How to use Policy Reporter and the OpenReports format to audit and debug the policy estate
 
 #### Tools & Infrastructure
 

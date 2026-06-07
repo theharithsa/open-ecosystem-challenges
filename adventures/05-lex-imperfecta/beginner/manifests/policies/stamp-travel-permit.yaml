@@ -1,0 +1,33 @@
+apiVersion: policies.kyverno.io/v1
+kind: MutatingPolicy
+metadata:
+  name: stamp-travel-permit
+  annotations:
+    policies.kyverno.io/title: Stamp Travel Permit
+    policies.kyverno.io/category: Admission Control
+    policies.kyverno.io/severity: low
+    policies.kyverno.io/subject: Pod, Label
+    policies.kyverno.io/description: >-
+      Peregrini — foreign travelers — must carry a travel permit to move freely through the Republic.
+      Any workload declaring itself as a peregrinus is automatically issued a travel permit upon arrival.
+spec:
+  matchConstraints:
+    resourceRules:
+      - apiGroups: [""]
+        apiVersions: ["v1"]
+        operations: ["CREATE"]
+        resources: ["pods"]
+  matchConditions:
+    - name: is-peregrinus
+      expression: >-
+        has(object.metadata.labels) &&
+        'republic.rome/traveler' in object.metadata.labels &&
+        object.metadata.labels['republic.rome/traveler'] == 'peregrinus'
+  mutations:
+    - patchType: ApplyConfiguration
+      applyConfiguration:
+        expression: |
+          Object{
+            metadata: Object.metadata{
+            }
+          }

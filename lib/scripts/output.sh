@@ -110,7 +110,7 @@ print_test_summary() {
     print_info_indent "3. Manually trigger the 'Verify Adventure' workflow on GitHub Actions"
     print_info_indent "4. Once verified, share your success with the community! 🎉"
     print_new_line
-    print_info "📖 For detailed verification instructions, see: https://dynatrace-oss.github.io/open-ecosystem-challenges/verification/"
+    print_info "📖 For detailed verification instructions, see: https://offon.dev/adventures/"
     exit
   fi
 

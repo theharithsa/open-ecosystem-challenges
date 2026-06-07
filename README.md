@@ -18,4 +18,4 @@ headaches.
 
 ## 🚀 Ready to Start?
 
-[Choose your adventure](https://dynatrace-oss.github.io/open-ecosystem-challenges/) and begin learning!
+[Choose your adventure](https://offon.dev/adventures/) and begin learning!

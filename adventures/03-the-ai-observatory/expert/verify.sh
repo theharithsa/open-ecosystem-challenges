@@ -5,13 +5,15 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck disable=SC1091
 source "$SCRIPT_DIR/../../../lib/scripts/loader.sh"
+# shellcheck disable=SC1091
+source "$SCRIPT_DIR/../../../lib/scripts/tracker-legacy.sh"
 
 OBJECTIVE="By the end of this level, you should:
 
 - Fix ART's chat span to follow OpenTelemetry GenAI semantic conventions — including token usage
 - Configure tail sampling in the OpenTelemetry Collector to only keep traces that contain errors or take longer than 5 seconds"
 
-DOCS_URL="https://dynatrace-oss.github.io/open-ecosystem-challenges/03-the-ai-observatory/expert"
+DOCS_URL="https://offon.dev/adventures/the-ai-observatory/levels/expert"
 
 print_header \
   'Challenge 03: The AI Observatory' \

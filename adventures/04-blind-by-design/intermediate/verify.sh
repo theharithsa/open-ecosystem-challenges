@@ -5,6 +5,8 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck disable=SC1091
 source "$SCRIPT_DIR/../../../lib/scripts/loader.sh"
+# shellcheck disable=SC1091
+source "$SCRIPT_DIR/../../../lib/scripts/tracker-legacy.sh"
 
 OBJECTIVE="By the end of this level, the lab hits each of these observable outcomes:
 
@@ -14,7 +16,7 @@ OBJECTIVE="By the end of this level, the lab hits each of these observable outco
 - Every evaluation produces an [AUDIT] log line carrying species, country, and dose
 - The response is never 'untreated' (provider is wired and reaches flagd)"
 
-DOCS_URL="https://dynatrace-oss.github.io/open-ecosystem-challenges/04-blind-by-design/intermediate"
+DOCS_URL="https://offon.dev/adventures/blind-by-design/levels/intermediate"
 
 print_header \
   'Adventure 04: Blind by Design' \

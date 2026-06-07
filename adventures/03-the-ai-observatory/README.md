@@ -10,5 +10,4 @@ are ready to go.
 
 ## 🚀 Ready to Start?
 
-[Choose your level](https://dynatrace-oss.github.io/open-ecosystem-challenges/03-the-ai-observatory/) and begin
-learning!
+[Choose your level](https://offon.dev/adventures/the-ai-observatory/) and begin learning!

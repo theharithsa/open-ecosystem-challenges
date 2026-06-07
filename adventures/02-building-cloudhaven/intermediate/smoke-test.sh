@@ -12,7 +12,7 @@ OBJECTIVE="By the end of this level, you should have:
 - A completed integration test that applies infrastructure against the mock GCP API
 - Three districts deployed with correctly configured infrastructure (vaults and ledgers)"
 
-DOCS_URL="https://dynatrace-oss.github.io/open-ecosystem-challenges/02-building-cloudhaven/intermediate"
+DOCS_URL="https://offon.dev/adventures/building-cloudhaven/levels/intermediate"
 
 print_header \
   'Challenge 02: Building CloudHaven' \

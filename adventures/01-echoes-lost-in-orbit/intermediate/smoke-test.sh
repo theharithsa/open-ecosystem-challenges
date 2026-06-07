@@ -12,7 +12,7 @@ OBJECTIVE="By the end of this level, you should have:
 - Two working PromQL queries in the AnalysisTemplate that validate application health during releases
 - All rollouts complete successfully"
 
-DOCS_URL="https://dynatrace-oss.github.io/open-ecosystem-challenges/01-echoes-lost-in-orbit/intermediate"
+DOCS_URL="https://offon.dev/adventures/echoes-lost-in-orbit/levels/intermediate"
 
 print_header \
   'Challenge 01: Echoes Lost in Orbit' \

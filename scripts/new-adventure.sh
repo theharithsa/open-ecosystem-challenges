@@ -55,15 +55,7 @@ The entire **infrastructure is pre-provisioned in your Codespace**
 
 ## 🚀 Ready to Start?
 
-[Choose your level](https://dynatrace-oss.github.io/open-ecosystem-challenges/00-$selected_slug/) and begin
-learning!
-EOF
-
-  cat > "$ADVENTURE_DIR/mkdocs.yaml" << EOF
-site_name: '$adventure_emoji  00: $adventure_name'
-
-nav:
-  - Introduction: index.md
+[Choose your level](https://offon.dev/adventures/$selected_slug/) and begin learning!
 EOF
 
   cat > "$ADVENTURE_DIR/docs/index.md" << EOF
@@ -209,8 +201,6 @@ The script will tell you which checks failed. Fix the issues and run it again.
    to claim your victory! 🏆
 EOF
 
-  echo "  - '$level_emoji $level_difficulty': $level_slug.md" >> "$ADVENTURE_DIR/mkdocs.yaml"
-
   cat >> "$ADVENTURE_DIR/docs/index.md" << EOF
 
 ### $level_emoji $level_difficulty: $level_name
@@ -220,10 +210,10 @@ EOF
 
 $level_summary
 
-[**Start the $level_difficulty Challenge**](./$level_slug.md){ .md-button .md-button--primary }
+[**Start the $level_difficulty Challenge**](./$level_slug.md)
 EOF
 
-  echo "✅ Level doc created, added to mkdocs.yaml, and level card added to index.md."
+  echo "✅ Level doc created and level card added to index.md."
 else
   echo "ℹ️  Level doc already exists, skipping."
 fi
@@ -245,7 +235,7 @@ SCRIPT_DIR="\$(cd "\$(dirname "\${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck disable=SC1091
 source "\$SCRIPT_DIR/../../../../lib/scripts/loader.sh"
 
-DOCS_URL="https://dynatrace-oss.github.io/open-ecosystem-challenges/00-$selected_slug/$level_slug"
+DOCS_URL="https://offon.dev/adventures/$selected_slug/levels/$level_slug"
 
 print_header \\
   'Challenge 00: $adventure_name' \\
@@ -397,5 +387,5 @@ gum style \
   "  .devcontainer/$DEVCONTAINER_NAME/" \
   "" \
   "$(gum style --foreground 245 "Need help? Check the contributing guide:")" \
-  "$(gum style --foreground 245 "https://dynatrace-oss.github.io/open-ecosystem-challenges/contributing/adventures/")"
+  "$(gum style --foreground 245 "https://github.com/dynatrace-oss/open-ecosystem-challenges/blob/main/CONTRIBUTING.md#build-a-new-adventure")"
 

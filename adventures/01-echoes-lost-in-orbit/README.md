@@ -10,4 +10,4 @@ ready to go.
 
 ## 🚀 Ready to Start?
 
-[Choose your level](https://dynatrace-oss.github.io/open-ecosystem-challenges/01-echoes-lost-in-orbit/) and begin learning!
+[Choose your level](https://offon.dev/adventures/echoes-lost-in-orbit/) and begin learning!

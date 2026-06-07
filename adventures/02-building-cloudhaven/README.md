@@ -9,4 +9,4 @@ The entire **infrastructure is pre-provisioned in your Codespace** — OpenTofu 
 
 ## 🚀 Ready to Start?
 
-[Choose your level](https://dynatrace-oss.github.io/open-ecosystem-challenges/02-building-cloudhaven/) and begin learning!
+[Choose your level](https://offon.dev/adventures/building-cloudhaven/) and begin learning!

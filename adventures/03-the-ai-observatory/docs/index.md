@@ -34,7 +34,7 @@ independent — pick your level and start wherever you feel comfortable!
 The HubSystem is running "blind". Your mission: instrument the Python application with OpenLLMetry, send traces to the
 collector, and use Jaeger to find out what the AI is actually doing.
 
-[**Start the Beginner Challenge**](./beginner.md){ .md-button .md-button--primary }
+[**Start the Beginner Challenge**](./beginner.md)
 
 ### 🟡 Intermediate: The Distracted Pilot
 
@@ -46,7 +46,7 @@ You've escaped aboard the Perihelion, a research vessel piloted by a very opinio
 coordinates to RaviHyral should have been ready an hour ago — but ART is distracted. Your mission: instrument the RAG
 pipeline, track what ART is actually retrieving, and fix the navigation system before you miss the jump window.
 
-[**Start the Intermediate Challenge**](./intermediate.md){ .md-button .md-button--primary }
+[**Start the Intermediate Challenge**](./intermediate.md)
 
 ### 🔴 Expert: The Noise Filter
 
@@ -59,5 +59,5 @@ mess. Non-standard span names, missing token usage, and Jaeger drowning in noise
 instrumentation to follow GenAI semantic conventions, record errors properly, and configure tail sampling to filter out
 the noise.
 
-[**Start the Expert Challenge**](./expert.md){ .md-button .md-button--primary }
+[**Start the Expert Challenge**](./expert.md)
 

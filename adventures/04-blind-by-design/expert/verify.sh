@@ -13,7 +13,7 @@ OBJECTIVE="By the end of this level, the lab hits each of these observable outco
 - The 'vision_amplifier_v2' rollout is rolled back to 100% off — without redeploying the lab
 - HTTP 5xx rate over the last minute drops below 1%"
 
-DOCS_URL="https://dynatrace-oss.github.io/open-ecosystem-challenges/04-blind-by-design/expert"
+DOCS_URL="https://offon.dev/adventures/blind-by-design/levels/expert"
 
 print_header \
   'Adventure 04: Blind by Design' \

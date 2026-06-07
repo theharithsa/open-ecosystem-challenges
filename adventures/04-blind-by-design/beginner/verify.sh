@@ -5,6 +5,8 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck disable=SC1091
 source "$SCRIPT_DIR/../../../lib/scripts/loader.sh"
+# shellcheck disable=SC1091
+source "$SCRIPT_DIR/../../../lib/scripts/tracker-legacy.sh"
 
 OBJECTIVE="By the end of this level, you should:
 
@@ -12,7 +14,7 @@ OBJECTIVE="By the end of this level, you should:
 - Confirm the response payload includes the OpenFeature evaluation details — flag key, variant, reason, value
 - Edit flags.json to change the defaultVariant, save, and have the next request return the new variant without restarting the app"
 
-DOCS_URL="https://dynatrace-oss.github.io/open-ecosystem-challenges/04-blind-by-design/beginner"
+DOCS_URL="https://offon.dev/adventures/blind-by-design/levels/beginner"
 
 APP_URL="http://localhost:8080/"
 FLAGS_FILE="$SCRIPT_DIR/flags.json"
