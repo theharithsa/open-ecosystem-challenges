@@ -22,8 +22,10 @@ spec:
         operations: ["CREATE", "UPDATE"]
         resources: ["pods"]
     namespaceSelector:
-      matchLabels:
-        republic.rome/realm: province
+      matchExpressions:
+        - key: kubernetes.io/metadata.name
+          operator: In
+          values: ["aegyptus"]
   validations:
     - expression: >-
         has(object.metadata.labels) &&
