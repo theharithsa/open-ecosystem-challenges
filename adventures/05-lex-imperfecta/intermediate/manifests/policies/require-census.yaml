@@ -1,0 +1,37 @@
+apiVersion: policies.kyverno.io/v1
+kind: ValidatingPolicy
+metadata:
+  name: require-census
+  annotations:
+    policies.kyverno.io/title: Citizen Census
+    policies.kyverno.io/category: Best Practices
+    policies.kyverno.io/severity: medium
+    policies.kyverno.io/subject: Pod, Label
+    policies.kyverno.io/description: >-
+      Every citizen must declare their gens and their province. These are the
+      foundational registration requirements of the Republic, applied empire-wide
+      to all provinces. Unregistered or misdeclared workloads cannot be admitted.
+      Recognised legacy workloads may be granted a formal exception.
+spec:
+  validationActions:
+    - Deny
+    - Audit
+  matchConstraints:
+    resourceRules:
+      - apiGroups: [""]
+        apiVersions: ["v1"]
+        operations: ["CREATE", "UPDATE"]
+        resources: ["pods"]
+    namespaceSelector:
+      matchExpressions:
+        - key: kubernetes.io/metadata.name
+          operator: In
+          values: ["gallia", "britannia", "aegyptus"]
+  validations:
+    - expression: "has(object.metadata.labels) && 'republic.rome/gens' in object.metadata.labels"
+      message: "All citizens must declare their gens. Unregistered workloads are not permitted in the Republic."
+    - expression: >-
+        has(object.metadata.labels) &&
+        'republic.rome/province' in object.metadata.labels &&
+        object.metadata.labels['republic.rome/province'] == object.metadata.namespace
+      message: "A workload's declared province must match the namespace it is deployed in. Citizens cannot claim citizenship in a province they do not inhabit."

@@ -5,7 +5,7 @@ in haste, and the exceptions were written too generously. Policies go unenforced
 something has slipped through the gates unnoticed. As a newly appointed Praetor, your mission is to restore order before
 chaos takes hold.
 
-**Technologies:** Kyverno, Falco, Policy Reporter, Argo CD, Kubernetes
+**Technologies:** Kyverno, Falco, Policy Reporter, Kubernetes
 
 The entire **infrastructure is pre-provisioned in your Codespace**
 **You don't need to set up anything locally. Just focus on solving the problem.**

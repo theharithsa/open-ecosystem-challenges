@@ -4,6 +4,7 @@ emoji: "⚖️"
 
 tags:
   - Kyverno
+  - Policy Reporter
   - Kubernetes
 
 backstory:

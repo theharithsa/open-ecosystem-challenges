@@ -58,21 +58,31 @@ The entire **infrastructure is pre-provisioned in your Codespace**
 [Choose your level](https://offon.dev/adventures/$selected_slug/) and begin learning!
 EOF
 
-  cat > "$ADVENTURE_DIR/docs/index.md" << EOF
-# $adventure_emoji Adventure 00: $adventure_name
+  cat > "$ADVENTURE_DIR/docs/index.yaml" << EOF
+slug: $selected_slug
+name: "$adventure_name"
+emoji: "$adventure_emoji"
 
-<!-- TODO: brief intro (mission + key technologies + pre-provisioned note) -->
+tags:
+  # TODO: list technologies as separate tag items
+  - TODO
 
-## 🪐 The Backstory
+backstory:
+  - >-
+    $adventure_theme
+  # TODO: expand backstory if desired
 
-$adventure_theme
+overview:
+  - >-
+    TODO: brief intro (mission + key technologies + pre-provisioned note)
 
-<!-- TODO: expand backstory if desired -->
-
-## 🎮 Choose Your Level
-
-Each level is a standalone challenge with its own Codespace that builds on the story while being technically
-independent — pick your level and start wherever you feel comfortable.
+rewards:
+  deadline: "" # TODO: fill in once the adventure goes live
+  tiers:
+    - label: "1st place"
+      description: "TODO"
+    - label: "Top 3"
+      description: "TODO"
 EOF
 
   echo "✅ Adventure base created."
@@ -88,132 +98,69 @@ level_objective=$(extract_level_section "$selected_file" "$selected_level" "Obje
 level_learnings=$(extract_level_section "$selected_file" "$selected_level" "What You'll Learn")
 level_tools=$(extract_level_section "$selected_file" "$selected_level" "Tools & Infrastructure")
 
-LEVEL_DOC="$ADVENTURE_DIR/docs/$level_slug.md"
+LEVEL_DOC="$ADVENTURE_DIR/docs/$level_slug.yaml"
 
 if [[ ! -f "$LEVEL_DOC" ]]; then
-  echo "Creating level doc at docs/$level_slug.md ..."
-  TICK='```'
+  echo "Creating level doc at docs/$level_slug.yaml ..."
 
   cat > "$LEVEL_DOC" << EOF
-# $level_emoji $level_difficulty: $level_name
-$level_story
+level: $level_slug
+emoji: "$level_emoji"
+title: "$level_name"
+devcontainer: ${selected_slug}_${level_slug}
+community_url: "" # TODO: add community thread URL once the adventure is live
 
-<!-- TODO: expand story if desired -->
+summary: "$level_summary"
 
-🏗️ Architecture
+audience: >-
+  TODO: describe who this level is for
 
-<!-- TODO: describe how the level is set up -->
+backstory:
+  - >-
+    $level_story
+  # TODO: expand backstory if desired
 
-## 🎯 Objective
-$level_objective
+objective:
+  - >-
+    TODO: first objective
 
-## 🧠 What You'll Learn
-$level_learnings
+what_you_learn:
+  - >-
+    TODO: first learning (link to relevant docs)
 
-## 🧰 Toolbox
+architecture:
+  - >-
+    TODO: describe the overall setup
+  - >-
+    TODO: describe what the player edits vs. leaves alone
 
-Your Codespace comes pre-configured with the following tools:
-$level_tools
+architecture_diagram: "" # TODO: add diagram filename (e.g. $selected_slug-$level_slug.svg)
 
-<!-- TODO: add links and usage notes -->
+toolbox:
+  - name: "TODO"
+    url: "TODO"
+    description: "TODO: describe what this tool is used for"
 
-## ⏰ Deadline
+services: []
 
-<!-- Leave empty for now. This will be added once the adventure goes live -->
+how_to_play:
+  - id: explore
+    title: "Explore the Setup"
+    content: |
+      TODO: describe how players can explore the initial state
 
-> ℹ️ You can still complete the challenge after this date, but points will only be awarded for submissions before the
-> deadline.
+  - id: implement
+    title: "Implement the Solution"
+    content: |
+      TODO: describe how players implement the solution
 
-## 💬 Join the discussion
-
-<!-- Leave the link as it is for now. This will be added once the adventure is live -->
-Share your solutions and questions in
-the [challenge thread](TODO)
-in the Open Ecosystem Community.
-
-## ✅ How to Play
-
-<!-- TODO: verify what's here add instructions where necessary -->
-
-### 1. Start Your Challenge
-
-> 📖 **First time?** Check out the [Getting Started Guide](../../start-a-challenge) for detailed instructions on
-> forking, starting a Codespace, and waiting for infrastructure setup.
-
-Quick start:
-
-- Fork the [repo](https://github.com/dynatrace-oss/open-ecosystem-challenges/)
-- Create a Codespace
-- Select "$adventure_emoji Adventure 00 | $level_emoji $level_difficulty ($level_name)"
-- Wait a couple of minutes for the environment to initialize (\`Cmd/Ctrl + Shift + P\` → \`View Creation Log\` to view progress)
-
-<!-- TODO: Feel free to be more specific about how long the setup usually takes in the last step above -->
-
-### 2. Access the UIs
-
-- Open the **Ports** tab in the bottom panel to access the following UIs
-
-#### Some UI you might use
-
-<!-- TODO: Add a description about what this tool is used for -->
-
-<!-- TODO: Add tool name & port number -->
-- Find the tool row (port NN) and click the forwarded address
-
-### 3. Implement the Objective
-
-<!-- TODO: A very short description to remind the user about the task again -->
-
-Review the [🎯 Objective](#objective) section to understand what a successful solution looks like.
-
-#### Where to Look
-
-<!-- TODO: Describe where to start investigating -->
-
-#### How to Run
-
-<!-- TODO: Describe how to run the service/app/whatever and e.g. generate load or whatever is necessary -->
-
-#### Helpful Documentation
-
-<!-- TODO: Add links to documentation that is helpful for solving this challenge -->
-
-### 4. Verify Your Solution
-
-Once you think you've solved the challenge, run the verification script:
-
-${TICK}bash
-./verify.sh
-${TICK}
-
-**If the verification fails:**
-
-The script will tell you which checks failed. Fix the issues and run it again.
-
-**If the verification passes:**
-
-1. The script will check if your changes are committed and pushed.
-2. Follow the on-screen instructions to commit your changes if needed.
-3. Once everything is ready, the script will generate a **Certificate of Completion**.
-<!-- Leave the link as it is for now. This will be added once the adventure is live -->
-4. **Copy this certificate** and paste it into
-   the [challenge thread](TODO)
-   to claim your victory! 🏆
+helpful_links:
+  - title: "TODO"
+    url: "TODO"
+    description: "TODO: describe what this link is useful for"
 EOF
 
-  cat >> "$ADVENTURE_DIR/docs/index.md" << EOF
-
-### $level_emoji $level_difficulty: $level_name
-
-- **Status:** 🚧 Coming Soon
-- **Topics:** $adventure_technologies
-
-$level_summary
-
-[**Start the $level_difficulty Challenge**](./$level_slug.md)
-EOF
-
-  echo "✅ Level doc created and level card added to index.md."
+  echo "✅ Level doc created."
 else
   echo "ℹ️  Level doc already exists, skipping."
 fi
@@ -234,6 +181,10 @@ set -euo pipefail
 SCRIPT_DIR="\$(cd "\$(dirname "\${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck disable=SC1091
 source "\$SCRIPT_DIR/../../../../lib/scripts/loader.sh"
+
+set_tracking_context "$selected_slug" "$level_slug" "00" "TODO" "TODO"
+
+OBJECTIVE="$level_objective"
 
 DOCS_URL="https://offon.dev/adventures/$selected_slug/levels/$level_slug"
 
@@ -268,7 +219,7 @@ fi
 
 if [[ \$TESTS_FAILED -gt 0 ]]; then
   track_verification_completed "failed" "\$failed_checks_json"
-  print_verification_summary "$selected_slug" "\$DOCS_URL"
+  print_verification_summary "$selected_slug" "\$DOCS_URL" "\$OBJECTIVE"
   exit 1
 fi
 
@@ -334,8 +285,8 @@ REPO_ROOT="\$(cd "\$(dirname "\${BASH_SOURCE[0]}")/../.." && pwd)"
 
 # shellcheck disable=SC1091
 source "\$REPO_ROOT/lib/scripts/tracker.sh"
-set_tracking_context "$selected_slug" "$level_slug"
-track_codespace_created
+set_tracking_context "$selected_slug" "$level_slug" "00" "TODO" "TODO"
+track_container_created
 
 "\$REPO_ROOT/lib/shared/init.sh" --version v0.17.0
 
@@ -365,8 +316,8 @@ echo "✨ Starting $adventure_name - $level_difficulty Level"
 
 # shellcheck disable=SC1091
 source "\$REPO_ROOT/lib/scripts/tracker.sh"
-set_tracking_context "$selected_slug" "$level_slug"
-track_codespace_initialized
+set_tracking_context "$selected_slug" "$level_slug" "00" "TODO" "TODO"
+track_container_initialized
 EOF
 
   chmod +x "$DEVCONTAINER_DIR/post-create.sh" "$DEVCONTAINER_DIR/post-start.sh"

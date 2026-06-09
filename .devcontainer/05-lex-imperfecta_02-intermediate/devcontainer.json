@@ -1,0 +1,32 @@
+{
+  "name": "⚖️ Adventure 05 | 🟡 Intermediate (Governing the Provinces)",
+  "image": "mcr.microsoft.com/devcontainers/base:bullseye",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/adventures/05-lex-imperfecta/intermediate",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  "postCreateCommand": "bash /workspaces/${localWorkspaceFolderBasename}/.devcontainer/05-lex-imperfecta_02-intermediate/post-create.sh",
+  "postStartCommand": "bash /workspaces/${localWorkspaceFolderBasename}/.devcontainer/05-lex-imperfecta_02-intermediate/post-start.sh",
+  "customizations": {
+    "codespaces": {
+      "openFiles": [
+        "manifests/policies/require-census.yaml",
+        "manifests/policies/aegyptus-require-scribe-role.yaml",
+        "manifests/exceptions/aegyptus-legacy-workload.yaml"
+      ],
+      "permissions": {
+        "codespaces": "write"
+      }
+    }
+  },
+  "forwardPorts": [30110],
+  "portsAttributes": {
+    "30110": {
+      "label": "Policy Reporter",
+      "onAutoForward": "notify"
+    }
+  },
+  "otherPortsAttributes": {
+    "onAutoForward": "ignore"
+  }
+}

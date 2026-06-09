@@ -13,7 +13,7 @@ chaos takes hold.
 - Manage and organize policies at scale across teams and environments
 - Respond to runtime threats that bypass static policies
 
-**Technologies:** Kyverno, Falco, Policy Reporter, OpenReports, Argo CD, Kubernetes
+**Technologies:** Kyverno, Falco, Policy Reporter, OpenReports, Kubernetes
 
 ---
 
@@ -66,9 +66,9 @@ Fix a misconfigured Kyverno policy setup and use Policy Reporter and the OpenRep
 
 #### Story
 
-The Republic has grown. What once was a single city is now a sprawling empire of provinces, each governed by different magistrates with different needs. The legal scholars decided to manage all policies through a central archive — a GitOps system that ensures every province's laws are version-controlled and auditable.
+The Republic has grown. What once was a single city is now a sprawling empire of provinces, each governed by different magistrates with different needs. The legal scholars decided to catalogue every law in a central archive — the Tabularium — so that each province's statutes could be tracked and audited in one place.
 
-But the migration introduced new chaos. Policies meant for one province are bleeding into another. Some provinces are ungoverned entirely. And the exceptions granted to certain citizens are... not quite right.
+But cataloguing the laws introduced new chaos. Policies meant for one province are bleeding into another. Some provinces are ungoverned entirely. And the exceptions granted to certain citizens are... not quite right.
 
 Your mission: investigate the policy estate, fix the scoping issues, and ensure each province is governed by the right laws.
 
@@ -93,8 +93,8 @@ By the end of this level, the learner should:
 
 #### Tools & Infrastructure
 
-- **Tools:** `kubectl`, `argocd` CLI, `kyverno` CLI, `k9s`
-- **Infrastructure:** Kubernetes Cluster, Kyverno, Argo CD, Policy Reporter
+- **Tools:** `kubectl`, `kyverno` CLI, `k9s`
+- **Infrastructure:** Kubernetes Cluster, Kyverno, Policy Reporter
 
 ---
 
@@ -139,5 +139,5 @@ By the end of this level, the learner should:
 
 #### Tools & Infrastructure
 
-- **Tools:** `kubectl`, `argocd` CLI, `kyverno` CLI, `falcoctl`, `k9s`
-- **Infrastructure:** Kubernetes Cluster, Kyverno, Argo CD, Policy Reporter, Falco
+- **Tools:** `kubectl`, `kyverno` CLI, `falcoctl`, `k9s`
+- **Infrastructure:** Kubernetes Cluster, Kyverno, Policy Reporter, Falco

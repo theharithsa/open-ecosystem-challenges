@@ -39,3 +39,7 @@ nodes:
   - hostPort: 30109
     containerPort: 30109
     protocol: TCP
+    # Policy Reporter
+  - hostPort: 30110
+    containerPort: 30110
+    protocol: TCP

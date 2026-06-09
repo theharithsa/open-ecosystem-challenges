@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: unregistered-scribe
+  namespace: hispania
+  labels:
+    # An unregistered workload (no republic.rome/gens) that is nonetheless
+    # running in hispania. It should never have been admitted here.
+    republic.rome/legacy: "true"
+    republic.rome/province: hispania
+    republic.rome/role: scribe
+spec:
+  containers:
+    - name: app
+      image: busybox:stable
+      command: ["sleep", "infinity"]
+      securityContext:
+        privileged: false
