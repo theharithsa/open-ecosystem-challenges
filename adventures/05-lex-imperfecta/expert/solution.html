@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lex Imperfecta - Expert Solution</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f4efe6;
+      --paper: #fffaf2;
+      --ink: #222222;
+      --muted: #5f5a53;
+      --accent: #9f2f16;
+      --accent-2: #1f5f4d;
+      --line: #d8c8af;
+      --ok: #1b7f3b;
+      --warn: #b06f00;
+      --shadow: 0 14px 40px rgba(56, 34, 10, 0.14);
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(1200px 600px at 15% -10%, #fff8ea 10%, transparent 70%),
+        radial-gradient(1200px 700px at 90% 0%, #efe4d2 0%, transparent 65%),
+        var(--bg);
+      color: var(--ink);
+      font-family: "Space Grotesk", sans-serif;
+      line-height: 1.55;
+    }
+
+    .wrap {
+      width: min(1080px, 92vw);
+      margin: 42px auto 60px;
+    }
+
+    .hero {
+      position: relative;
+      padding: 28px;
+      border: 2px solid var(--line);
+      border-radius: 24px;
+      background: linear-gradient(145deg, #fffdf9, #fff6e8);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      animation: rise 0.7s ease both;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: auto -60px -80px auto;
+      width: 220px;
+      height: 220px;
+      background: conic-gradient(from 90deg, #e4b889, #f8e9d3, #cfa777, #e4b889);
+      opacity: 0.28;
+      border-radius: 50%;
+      filter: blur(2px);
+    }
+
+    .kicker {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 4px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: #fff;
+    }
+
+    h1 {
+      margin: 4px 0 8px;
+      font-size: clamp(1.8rem, 3.4vw, 2.8rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      max-width: 72ch;
+      color: #3f3a35;
+      margin: 0;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .pill {
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid var(--line);
+      font-size: 13px;
+      color: #4b443d;
+    }
+
+    .layout {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--paper);
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: 0 10px 24px rgba(34, 20, 2, 0.07);
+      animation: rise 0.8s ease both;
+    }
+
+    .card h2 {
+      margin: 0 0 8px;
+      font-size: 1.14rem;
+      letter-spacing: -0.01em;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .steps {
+      margin-top: 12px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 30px 1fr;
+      gap: 10px;
+      align-items: start;
+      border: 1px solid #e0d2bb;
+      border-radius: 12px;
+      background: #fffdf8;
+      padding: 10px;
+    }
+
+    .n {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(130deg, var(--accent), #c85a40);
+      font-size: 14px;
+    }
+
+    .step strong {
+      display: block;
+      margin-bottom: 2px;
+      font-size: 0.97rem;
+    }
+
+    .step span {
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .paths {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .path {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 12.5px;
+      background: #fff;
+      border: 1px dashed #d8c8af;
+      color: #4a433a;
+      border-radius: 10px;
+      padding: 8px;
+      overflow-wrap: anywhere;
+    }
+
+    .terminal {
+      margin-top: 18px;
+      background: #181716;
+      color: #f5f2ed;
+      border-radius: 14px;
+      border: 1px solid #403b35;
+      overflow: hidden;
+      font-family: "IBM Plex Mono", monospace;
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.2);
+      animation: rise 0.95s ease both;
+    }
+
+    .terminal .bar {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      padding: 10px 14px;
+      background: #252220;
+      border-bottom: 1px solid #3d3834;
+      font-size: 12px;
+      color: #c7beb3;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .dot.red { background: #f26a5e; }
+    .dot.yellow { background: #efbe4c; }
+    .dot.green { background: #56c073; }
+
+    pre {
+      margin: 0;
+      white-space: pre-wrap;
+      padding: 14px;
+      font-size: 12.5px;
+      line-height: 1.45;
+    }
+
+    .ok {
+      color: #96f2a2;
+    }
+
+    .warn {
+      color: #ffd27c;
+    }
+
+    .grid-2 {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .snippet {
+      background: #fff;
+      border: 1px solid #e3d4be;
+      border-radius: 12px;
+      padding: 12px;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 12.5px;
+      color: #3f3830;
+      min-height: 120px;
+      overflow-x: auto;
+    }
+
+    .snippet-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.03em;
+      color: #5b5248;
+      text-transform: uppercase;
+      margin: 0 0 8px;
+    }
+
+    .status {
+      margin-top: 22px;
+      padding: 16px;
+      border-radius: 14px;
+      border: 1.5px solid #bfd9c4;
+      background: linear-gradient(145deg, #f6fff8, #ecf8ef);
+      color: #1a4b26;
+      box-shadow: 0 8px 20px rgba(12, 88, 34, 0.08);
+      animation: rise 1.05s ease both;
+    }
+
+    .status strong {
+      display: block;
+      font-size: 1.08rem;
+      margin-bottom: 2px;
+    }
+
+    .footer {
+      margin-top: 20px;
+      color: #645d54;
+      font-size: 14px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      border-top: 1px dashed #cbbba2;
+      padding-top: 12px;
+    }
+
+    code {
+      font-family: "IBM Plex Mono", monospace;
+      background: #f6efe2;
+      border: 1px solid #e3d4be;
+      border-radius: 7px;
+      padding: 1px 5px;
+      color: #4e453b;
+      font-size: 0.92em;
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 920px) {
+      .layout,
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .wrap {
+        margin-top: 24px;
+      }
+
+      .hero {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <span class="kicker">Open Ecosystem Challenges</span>
+      <h1>Lex Imperfecta: Expert Solution</h1>
+      <p class="subtitle">
+        A visual walkthrough of how the challenge was solved: waking the Praetorian Guard,
+        closing the capability gap, and sealing the census archive against the intruder.
+      </p>
+      <div class="pill-row">
+        <span class="pill">Falco Runtime Detection</span>
+        <span class="pill">Kyverno ValidatingPolicy</span>
+        <span class="pill">Linux Capabilities</span>
+        <span class="pill">Secret Volume Gating</span>
+        <span class="pill">13/13 checks passed</span>
+      </div>
+    </section>
+
+    <section class="layout">
+      <article class="card">
+        <h2>What Was Fixed</h2>
+        <p>
+          The intruder (<code>speculator</code>) passed admission and read the census archive
+          undetected. Three independent defects allowed this — each required a separate fix.
+        </p>
+        <div class="steps">
+          <div class="step">
+            <div class="n">1</div>
+            <div>
+              <strong>Falco rule condition replaced</strong>
+              <span>Placeholder <code>proc.name = "GUARD_NOT_YET_ACTIVE"</code> swapped for a real
+              syscall + path filter on <code>/run/secrets/census-archive/</code>.</span>
+            </div>
+          </div>
+          <div class="step">
+            <div class="n">2</div>
+            <div>
+              <strong>Capabilities gap closed in admission policy</strong>
+              <span>The intruder used <code>privileged: false</code> + <code>SYS_ADMIN</code> to
+              bypass the existing check. A second validation now blocks any
+              <code>capabilities.add</code> in province containers.</span>
+            </div>
+          </div>
+          <div class="step">
+            <div class="n">3</div>
+            <div>
+              <strong>Census archive sealed at admission</strong>
+              <span>New policy <code>restrict-census-archive</code> denies any pod mounting
+              the <code>census-archive</code> secret unless it carries
+              <code>republic.rome/role: archivist</code>.</span>
+            </div>
+          </div>
+          <div class="step">
+            <div class="n">4</div>
+            <div>
+              <strong>Rename-evasion blocked</strong>
+              <span>The archive policy inspects <code>volume.secret.secretName</code>, not the
+              volume's own name — renaming the volume cannot evade the gate.</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <aside class="card">
+        <h2>Files Changed</h2>
+        <p>These are the exact files touched for a passing solution.</p>
+        <div class="paths">
+          <div class="path">falco-rules.yaml</div>
+          <div class="path">manifests/policies/no-privileged-containers.yaml</div>
+          <div class="path">manifests/policies/restrict-census-archive.yaml</div>
+        </div>
+
+        <div class="terminal">
+          <div class="bar">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            verify.sh
+          </div>
+          <pre><span class="ok">✓</span> Empire-wide laws still hold (6 checks)
+<span class="ok">✓</span> SYS_ADMIN capability blocked in province
+<span class="ok">✓</span> NET_ADMIN capability blocked in province
+<span class="ok">✓</span> No-capability pod still admitted
+<span class="ok">✓</span> Census archive mount denied without role
+<span class="ok">✓</span> Archive mount allowed with archivist role
+<span class="ok">✓</span> Renamed volume evasion blocked
+<span class="ok">✓</span> Falco rule fires on archive read
+
+<span class="ok">✅ PASSED: All 13 verification checks passed!</span></pre>
+        </div>
+      </aside>
+    </section>
+
+    <section class="grid-2">
+      <article class="card">
+        <h2>Act 1: Falco Rule Fix</h2>
+        <p class="snippet-title">falco-rules.yaml — condition</p>
+        <div class="snippet"># Before (never fires)
+condition: proc.name = "GUARD_NOT_YET_ACTIVE"
+
+# After
+condition: >
+  evt.type in (open, openat, openat2)
+  and evt.is_open_read = true
+  and fd.name startswith
+    '/run/secrets/census-archive/'</div>
+      </article>
+
+      <article class="card">
+        <h2>Act 2: Capabilities Validation</h2>
+        <p class="snippet-title">no-privileged-containers.yaml — added validation</p>
+        <div class="snippet">- expression: >-
+    variables.allContainers.all(c,
+      c.?securityContext
+       .?capabilities
+       .?add
+       .orValue([])
+       .size() == 0
+    )
+  message: "Adding Linux capabilities
+    is not permitted in the provinces."</div>
+      </article>
+
+      <article class="card">
+        <h2>Act 3: Archive Policy — Core Expression</h2>
+        <p class="snippet-title">restrict-census-archive.yaml — variable + validation</p>
+        <div class="snippet">variables:
+  - name: mountsCensusArchive
+    expression: >-
+      object.spec.?volumes.orValue([])
+        .exists(v,
+          v.?secret.?secretName
+           .orValue('') == 'census-archive'
+        )
+
+validations:
+  - expression: >-
+      !variables.mountsCensusArchive ||
+      object.metadata.labels
+        ['republic.rome/role'] == 'archivist'</div>
+      </article>
+
+      <article class="card">
+        <h2>Runbook</h2>
+        <p class="snippet-title">Commands used</p>
+        <div class="snippet">## Apply all changes
+make apply
+
+## Watch Falco alerts stream in
+## (Falcosidekick UI at port 30111)
+
+## Confirm intruder is blocked
+# speculator denied at admission:
+# - SYS_ADMIN capability
+# - census-archive mount without role
+
+## Run verification
+./verify.sh</div>
+      </article>
+    </section>
+
+    <section class="status">
+      <strong>Result</strong>
+      The Praetorian Guard now fires a CRITICAL alert on every census archive read.
+      The intruder is denied re-admission by two independent policies — capabilities
+      and archive access. All 13 empire-wide and expert-level checks pass, and the
+      renamed-volume evasion attempt is also blocked.
+    </section>
+
+    <section class="footer">
+      <span>Challenge: Lex Imperfecta / Expert — Quis Custodiet</span>
+      <span>Outcome: 13 of 13 checks passing</span>
+    </section>
+  </main>
+</body>
+</html>

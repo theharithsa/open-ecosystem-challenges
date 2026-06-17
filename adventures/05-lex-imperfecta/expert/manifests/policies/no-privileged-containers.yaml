@@ -37,3 +37,8 @@ spec:
           !c.?securityContext.?privileged.orValue(false)
         )
       message: "The Senate forbids unchecked power: privileged containers are not permitted in the provinces."
+    - expression: >-
+        variables.allContainers.all(c,
+          c.?securityContext.?capabilities.?add.orValue([]).size() == 0
+        )
+      message: "The Senate forbids unchecked power: adding Linux capabilities is not permitted in the provinces."

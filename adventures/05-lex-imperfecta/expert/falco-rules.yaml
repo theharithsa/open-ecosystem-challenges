@@ -4,7 +4,7 @@
     A process has opened the census archive secret mount. The imperial census
     rolls are under constant surveillance. Any read is reported to the
     Praetorian Guard immediately.
-  condition: 'proc.name = "GUARD_NOT_YET_ACTIVE"'
+  condition: evt.type in (open, openat, openat2) and evt.is_open_read = true and fd.name startswith '/run/secrets/census-archive/'
   output: >
     Census archive accessed by unauthorized hand
     (proc=%proc.name pid=%proc.pid user=%user.name

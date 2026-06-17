@@ -1,0 +1,43 @@
+apiVersion: policies.kyverno.io/v1
+kind: ValidatingPolicy
+metadata:
+  name: restrict-census-archive
+  annotations:
+    policies.kyverno.io/title: Restrict Census Archive Access
+    policies.kyverno.io/category: Security
+    policies.kyverno.io/severity: high
+    policies.kyverno.io/subject: Pod, Volume, Secret
+    policies.kyverno.io/description: >-
+      The census archive contains the imperial registration rolls and must not
+      be mounted by any workload that does not bear the Archivist seal. Only
+      pods carrying the 'republic.rome/role: archivist' label may access the
+      census-archive secret. The check inspects the secretName of each volume,
+      not the volume's own name, to prevent rename-based evasion.
+spec:
+  validationActions:
+    - Deny
+    - Audit
+  matchConstraints:
+    resourceRules:
+      - apiGroups: [""]
+        apiVersions: ["v1"]
+        operations: ["CREATE", "UPDATE"]
+        resources: ["pods"]
+    namespaceSelector:
+      matchLabels:
+        republic.rome/realm: province
+  variables:
+    - name: mountsCensusArchive
+      expression: >-
+        object.spec.?volumes.orValue([]).exists(v,
+          v.?secret.?secretName.orValue('') == 'census-archive'
+        )
+  validations:
+    - expression: >-
+        !variables.mountsCensusArchive ||
+        (
+          has(object.metadata.labels) &&
+          'republic.rome/role' in object.metadata.labels &&
+          object.metadata.labels['republic.rome/role'] == 'archivist'
+        )
+      message: "Only Archivist workloads may mount the census archive. Add 'republic.rome/role: archivist' to access the census rolls."
