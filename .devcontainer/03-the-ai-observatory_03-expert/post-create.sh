@@ -4,7 +4,7 @@ set -e
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 
 # shellcheck disable=SC1091
-source "$REPO_ROOT/lib/scripts/tracker.sh"
+source "$REPO_ROOT/lib/scripts/tracker-legacy.sh"
 set_tracking_context "03-the-ai-observatory" "expert"
 track_codespace_created
 

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: praetorian-monitor
+  namespace: castra
+  labels:
+    republic.rome/gens: praetoria
+spec:
+  containers:
+    - name: monitor
+      image: busybox:stable
+      command: ["sleep", "infinity"]
+      securityContext:
+        privileged: true

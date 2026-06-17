@@ -1,0 +1,154 @@
+level: expert
+emoji: "🔴"
+title: "Quis Custodiet"
+devcontainer: lex-imperfecta_03-expert
+community_url: "" # TODO: add community thread URL once the adventure is live
+
+summary: "An intruder is already inside the Republic, and the watchmen cannot see it. Fix the Praetorian Guard's broken detection rule, close the admission gap that let the intruder slip through, and seal the census archive against unauthorized access."
+
+audience: >-
+  Security engineers and platform engineers who want to explore the boundary between admission control
+  and runtime security. Completing the Intermediate level first is helpful but not required. You should
+  be comfortable reading Kyverno ValidatingPolicies and CEL expressions. No prior Falco experience
+  required.
+
+backstory:
+  - >-
+    The Republic's defences have always rested on the law: block the wrong workloads at the gate, and
+    nothing bad gets in. But the Senate's Praetorian Guard was built for a different threat: the
+    workload that slips through and acts badly at runtime. The Guard watches the provinces through
+    Falco, but tonight, the watchtower is dark. Someone broke the rule that should fire when the census
+    archive is touched. The Guard sees nothing.
+  - >-
+    And while the Guard slept, an intruder crept in. It declared valid labels, passed the census, and
+    presented itself as a loyal citizen of the Republic. Its papers were in order. Its power was not.
+    Once inside, it reached straight for the census archive: the imperial rolls of every citizen, sealed
+    records it had no right to touch. It reads them on a loop and tries to send them out of the Republic.
+
+objective:
+  - >-
+    **The Praetorian Guard awake**: Falco fires an alert every time an unauthorized process reads the
+    census archive, with live alerts streaming into the Falcosidekick UI
+  - >-
+    **The gate closed**: the intruder is denied re-admission. The policy that kept privileged
+    containers out now covers every path to unchecked host power
+  - >-
+    **The archive sealed**: the census-archive secret is inaccessible to any workload that does not
+    bear the Archivist role
+  - >-
+    **The empire-wide laws holding**: all intermediate-level checks still green across every province
+
+what_you_learn:
+  - >-
+    How [Falco rules](https://falco.org/docs/reference/rules/) are structured: conditions, output, and
+    kernel-level fields, and how to write a rule targeting a specific runtime behaviour
+  - >-
+    Why `privileged: false` is not enough: how
+    [Linux capabilities](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-capabilities-for-a-container)
+    grant host-level access without the privileged flag
+  - >-
+    How to use [`spec.variables`](https://kyverno.io/docs/policy-types/validating-policy/) in a
+    `ValidatingPolicy` to share reusable CEL expressions across validations
+  - >-
+    How pod volumes reference secrets, and why a volume's name and the secret it mounts are two
+    separate fields in the pod spec
+  - >-
+    How [Falcosidekick](https://github.com/falcosecurity/falcosidekick) aggregates Falco alerts and
+    how to use its UI to watch a runtime incident in real time
+
+architecture:
+  - >-
+    The estate inherits the full intermediate topology: four province namespaces (`gallia`, `hispania`,
+    `britannia`, `aegyptus`) and one infra namespace (`castra`), each labelled as before. Alongside the
+    Kyverno stack and Policy Reporter, the cluster now runs **Falco** (eBPF-based, as a DaemonSet) and
+    **Falcosidekick** with its UI at port
+    **30111**. At startup, an intruder pod is already running in one of the provinces, quietly reading
+    the census archive: imperial rolls that only workloads bearing the `republic.rome/role: archivist`
+    label are permitted to access.
+  - >-
+    Your working directory is the challenge root. `manifests/secrets/` and `manifests/workloads/` are
+    already in place. They define the estate and the intruder, and need no changes. Everything else is
+    yours to investigate and fix.
+
+toolbox:
+  - name: kubectl
+    url: "https://kubernetes.io/docs/reference/kubectl/"
+    description: Apply and inspect cluster resources, check pod status and security contexts
+  - name: k9s
+    url: "https://k9scli.io/"
+    description: Explore cluster resources, pod logs, and policy reports in a terminal UI
+  - name: kyverno
+    url: "https://kyverno.io/docs/kyverno-cli/"
+    description: Test a policy against a resource locally before applying it to the cluster
+
+how_to_play:
+  - id: survey
+    title: "Survey the Scene"
+    content: |
+      When your Codespace opens, the intruder is already running. Open the **Falcosidekick UI** at
+      the forwarded port **30111**. It should be streaming alerts about census archive reads,
+      but it is silent. That silence is your first clue that something is wrong with the Guard.
+
+      Start by getting oriented:
+
+      ```bash
+      # Can you find the intruder?
+      kubectl get pods -A
+
+      # Read the Falco rule that should be firing
+      cat falco-rules.yaml
+
+      # Which policies are in force?
+      kubectl get validatingpolicies
+      kubectl get namespacedvalidatingpolicies -A
+      ```
+
+      Open **Policy Reporter** at port **30110** as well. The intermediate estate should look clean:
+      the intruder left no trace at admission. That is part of the problem.
+
+  - id: act1
+    title: "Act 1: Wake the Praetorian Guard"
+    content: |
+      The Falco rule in `falco-rules.yaml` has a defect: find the break, fix it, and run `make apply`;
+      alerts streaming into the **Falcosidekick UI at port 30111** are your signal. The
+      [Falco condition fields reference](https://falco.org/docs/reference/rules/supported-fields/)
+      documents every available field.
+
+  - id: act2
+    title: "Act 2: Close the Gate"
+    content: |
+      The intruder passed admission: find the policy gap that let it through, close it, and run
+      `make apply`; re-admission denied and the **Falcosidekick UI** going quiet confirm Act 2 is done.
+      The existing policy already uses [`spec.variables`](https://kyverno.io/docs/policy-types/validating-policy/)
+      to share expressions across validations, a pattern worth exploring.
+
+  - id: act3
+    title: "Act 3: Seal the Archive"
+    content: |
+      Open `manifests/policies/`: something is missing; the other policies show the structure, write
+      what's needed, then run `make apply`.
+
+      **Going further:** even with the archive sealed at admission, any workload admitted with the
+      Archivist role can read the secret. Kubernetes RBAC can restrict which service accounts may
+      `get` a secret at the API level, a complementary layer that admission control alone cannot
+      provide.
+
+helpful_links:
+  - title: Falco Rules Reference
+    url: "https://falco.org/docs/reference/rules/"
+    description: "The anatomy of a Falco rule: condition, output, priority, tags, and how rules are evaluated"
+  - title: Falco Condition Fields
+    url: "https://falco.org/docs/reference/rules/supported-fields/"
+    description: "Every field available in Falco rule conditions: syscall events, file descriptors, process info, and Kubernetes metadata"
+  - title: Linux Capabilities in Kubernetes
+    url: "https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-capabilities-for-a-container"
+    description: How Linux capabilities work and how to configure or restrict them in a pod's security context
+  - title: Kyverno ValidatingPolicy
+    url: "https://kyverno.io/docs/policy-types/validating-policy/"
+    description: Reference docs for ValidatingPolicy, including spec.variables for composing reusable CEL expressions
+  - title: CEL Validation Expressions
+    url: "https://kubernetes.io/docs/reference/using-api/cel/"
+    description: "How CEL expressions work in Kubernetes admission: operators, optional chaining, and collection functions"
+  - title: Falcosidekick
+    url: "https://github.com/falcosecurity/falcosidekick"
+    description: The Falco alert aggregator that routes Falco events to sinks including the Falcosidekick UI

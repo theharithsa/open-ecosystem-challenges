@@ -1,0 +1,21 @@
+apiVersion: policies.kyverno.io/v1
+kind: PolicyException
+metadata:
+  name: aegyptus-legacy-workload
+  namespace: aegyptus
+  annotations:
+    policies.kyverno.io/description: >-
+      The scribes of Aegyptus have served the Republic since before the Twelve
+      Tables were written. Their ancient tools cannot carry the gens label, so
+      the Senate has granted them a formal exception — workloads that declare
+      themselves legacy ('republic.rome/legacy: "true"') are spared the census.
+spec:
+  policyRefs:
+    - name: require-census
+      kind: ValidatingPolicy
+  matchConditions:
+    - name: is-legacy
+      expression: >-
+        has(object.metadata.labels) &&
+        'republic.rome/legacy' in object.metadata.labels &&
+        object.metadata.labels['republic.rome/legacy'] == 'true'

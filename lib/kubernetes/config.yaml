@@ -43,3 +43,7 @@ nodes:
   - hostPort: 30110
     containerPort: 30110
     protocol: TCP
+    # Falcosidekick UI
+  - hostPort: 30111
+    containerPort: 30111
+    protocol: TCP

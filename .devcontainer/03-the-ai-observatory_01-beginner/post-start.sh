@@ -12,6 +12,6 @@ pip install -r "$CHALLENGE_DIR/requirements.txt" --quiet
 
 # Track that the environment is ready
 # shellcheck disable=SC1091
-source "$REPO_ROOT/lib/scripts/tracker.sh"
+source "$REPO_ROOT/lib/scripts/tracker-legacy.sh"
 set_tracking_context "03-the-ai-observatory" "beginner"
 track_codespace_initialized

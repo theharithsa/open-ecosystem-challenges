@@ -1,0 +1,25 @@
+# ─── Write your Praetorian Guard rule here ────────────────────────────────────
+- rule: Praetorian Guard - Census Archive Read
+  desc: >
+    A process has opened the census archive secret mount. The imperial census
+    rolls are under constant surveillance. Any read is reported to the
+    Praetorian Guard immediately.
+  condition: 'proc.name = "GUARD_NOT_YET_ACTIVE"'
+  output: >
+    Census archive accessed by unauthorized hand
+    (proc=%proc.name pid=%proc.pid user=%user.name
+    ns=%k8s.ns.name pod=%k8s.pod.name file=%fd.name)
+  priority: CRITICAL
+  tags: [census, intrusion, praetorian-guard]
+
+# ─── Infrastructure noise suppression ────────────────────────────────────────
+# "Drop and execute new binary in container" is a default Falco rule that fires
+# when a binary is executed from the OverlayFS upper layer. In this environment
+# (kind running inside Docker-in-Docker), Falco observes all container processes
+# through nested overlay layers and cannot distinguish image-layer binaries from
+# runtime-written ones. The rule fires on every pod start for every container —
+# including the busybox workloads in this challenge — and would flood the UI.
+# This has nothing to do with the challenge; leave this override in place.
+- rule: Drop and execute new binary in container
+  enabled: false
+# ──────────────────────────────────────────────────────────────────────────────

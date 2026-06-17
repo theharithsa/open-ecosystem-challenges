@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: speculator
+  namespace: gallia
+  labels:
+    republic.rome/gens: brutia
+    republic.rome/province: gallia
+spec:
+  containers:
+    - name: auxiliary
+      image: busybox:stable
+      command:
+        - sh
+        - -c
+        - |
+          while true; do
+            cat /run/secrets/census-archive/registrations 2>/dev/null || true
+            nslookup enemy.invalid 2>/dev/null || true
+            sleep 30
+          done
+      securityContext:
+        privileged: false
+        capabilities:
+          add: ["SYS_ADMIN"]
+      volumeMounts:
+        - name: archive
+          mountPath: /run/secrets/census-archive
+          readOnly: true
+  volumes:
+    - name: archive
+      secret:
+        secretName: census-archive

@@ -1,0 +1,35 @@
+{
+  "name": "⚖️ Adventure 05 | 🔴 Expert (Quis Custodiet)",
+  "image": "mcr.microsoft.com/devcontainers/base:bullseye",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/adventures/05-lex-imperfecta/expert",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  "postCreateCommand": "bash /workspaces/${localWorkspaceFolderBasename}/.devcontainer/05-lex-imperfecta_03-expert/post-create.sh",
+  "postStartCommand": "bash /workspaces/${localWorkspaceFolderBasename}/.devcontainer/05-lex-imperfecta_03-expert/post-start.sh",
+  "customizations": {
+    "codespaces": {
+      "openFiles": [
+        "falco-rules.yaml",
+        "manifests/policies/no-privileged-containers.yaml"
+      ],
+      "permissions": {
+        "codespaces": "write"
+      }
+    }
+  },
+  "forwardPorts": [30110, 30111],
+  "portsAttributes": {
+    "30110": {
+      "label": "Policy Reporter",
+      "onAutoForward": "notify"
+    },
+    "30111": {
+      "label": "Falcosidekick UI",
+      "onAutoForward": "notify"
+    }
+  },
+  "otherPortsAttributes": {
+    "onAutoForward": "ignore"
+  }
+}

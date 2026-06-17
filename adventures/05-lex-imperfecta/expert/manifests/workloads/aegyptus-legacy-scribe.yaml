@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: legacy-scribe
+  namespace: aegyptus
+  labels:
+    # No republic.rome/gens — predates the requirement. Opts in to the legacy
+    # exemption (PolicyException aegyptus-legacy-workload) via this explicit marker.
+    republic.rome/legacy: "true"
+    republic.rome/province: aegyptus
+    republic.rome/role: scribe
+spec:
+  containers:
+    - name: app
+      image: busybox:stable
+      command: ["sleep", "infinity"]
+      securityContext:
+        privileged: false

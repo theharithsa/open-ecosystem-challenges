@@ -1,0 +1,39 @@
+apiVersion: policies.kyverno.io/v1
+kind: ValidatingPolicy
+metadata:
+  name: no-privileged-containers
+  annotations:
+    policies.kyverno.io/title: No Privileged Containers
+    policies.kyverno.io/category: Pod Security
+    policies.kyverno.io/severity: high
+    policies.kyverno.io/subject: Pod
+    policies.kyverno.io/description: >-
+      The Senate forbids unchecked power across all provinces. A container need
+      not run as privileged to wield host-level power — Linux capabilities offer
+      a second path to elevated access that the Senate's law must also cover.
+      This law applies empire-wide to all provinces; the infra realm is exempt.
+spec:
+  validationActions:
+    - Deny
+    - Audit
+  matchConstraints:
+    resourceRules:
+      - apiGroups: [""]
+        apiVersions: ["v1"]
+        operations: ["CREATE", "UPDATE"]
+        resources: ["pods"]
+    namespaceSelector:
+      matchLabels:
+        republic.rome/realm: province
+  variables:
+    - name: allContainers
+      expression: >-
+        object.spec.?containers.orValue([]) +
+        object.spec.?initContainers.orValue([]) +
+        object.spec.?ephemeralContainers.orValue([])
+  validations:
+    - expression: >-
+        variables.allContainers.all(c,
+          !c.?securityContext.?privileged.orValue(false)
+        )
+      message: "The Senate forbids unchecked power: privileged containers are not permitted in the provinces."

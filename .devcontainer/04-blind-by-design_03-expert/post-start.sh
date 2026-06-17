@@ -35,7 +35,7 @@ EOF
 
 # Track that the environment is ready
 # shellcheck disable=SC1091
-source "$REPO_ROOT/lib/scripts/tracker.sh"
+source "$REPO_ROOT/lib/scripts/tracker-legacy.sh"
 set_tracking_context "04-blind-by-design" "expert"
 track_codespace_initialized
 

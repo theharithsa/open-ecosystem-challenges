@@ -5,7 +5,7 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 CHALLENGE_DIR="$REPO_ROOT/adventures/04-blind-by-design/beginner"
 
 # shellcheck disable=SC1091
-source "$REPO_ROOT/lib/scripts/tracker.sh"
+source "$REPO_ROOT/lib/scripts/tracker-legacy.sh"
 set_tracking_context "04-blind-by-design" "beginner"
 track_codespace_created
 

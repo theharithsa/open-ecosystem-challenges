@@ -22,6 +22,7 @@ source "$LIB_DIR/github.sh"
 source "$LIB_DIR/submission.sh"
 source "$LIB_DIR/tracker.sh"
 source "$LIB_DIR/jaeger.sh"
+source "$LIB_DIR/falco.sh"
 
 # Set up cleanup trap for port-forwards
 trap cleanup_port_forwards EXIT INT TERM

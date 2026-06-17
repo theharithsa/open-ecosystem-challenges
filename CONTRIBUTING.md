@@ -211,10 +211,10 @@ Use `00` as the adventure number during development. When your adventure is sche
 adventures/planned/00-adventure-name/
 ├── README.md                    # Brief intro + link to docs
 ├── docs/
-│   ├── index.md                 # Adventure introduction
-│   ├── beginner.md              # Level guide
-│   ├── intermediate.md
-│   ├── expert.md
+│   ├── index.yaml               # Adventure introduction
+│   ├── beginner.yaml            # Level guide
+│   ├── intermediate.yaml
+│   ├── expert.yaml
 │   └── solutions/
 │       ├── beginner.md          # Solution walkthrough
 │       ├── intermediate.md
@@ -245,8 +245,8 @@ make new-adventure
 
 This will prompt you to select an adventure and level, then generate:
 
-- `adventures/planned/00-adventure-name/` — adventure base with `README.md` and `docs/index.md`
-- `adventures/planned/00-adventure-name/docs/<level>.md` — level guide
+- `adventures/planned/00-adventure-name/` — adventure base with `README.md` and `docs/index.yaml`
+- `adventures/planned/00-adventure-name/docs/<level>.yaml` — level guide
 - `adventures/planned/00-adventure-name/<level>/verify.sh` — verification script skeleton
 - `.devcontainer/00-adventure-name_NN-level/` — `devcontainer.json`, `post-create.sh`, `post-start.sh`
 
@@ -304,7 +304,7 @@ Not sure if a challenge belongs at Beginner, Intermediate, or Expert? See [Calib
 
 #### 5. Write the Documentation
 
-Fill in the generated `docs/<level>.md` — it already contains the story, objectives, and learning outcomes from the idea file. Add:
+Fill in the generated `docs/<level>.yaml` — it already contains the story, objectives, and learning outcomes from the idea file. Add:
 - Architecture overview (how the level is set up)
 - UI access instructions with port numbers
 - Where to start investigating
@@ -312,7 +312,7 @@ Fill in the generated `docs/<level>.md` — it already contains the story, objec
 
 No spoilers — save those for a `solutions/<level>.md` file.
 
-See [Adventure 01's beginner level](adventures/01-echoes-lost-in-orbit/docs/beginner.md) for a good example.
+See [Lex Imperfecta's beginner level](adventures/05-lex-imperfecta/docs/beginner.yaml) for a good example.
 
 #### 6. Create the Verification Script
 
