@@ -16,6 +16,6 @@ python "$CHALLENGE_DIR/init_db.py"
 
 # Track that the environment is ready
 # shellcheck disable=SC1091
-source "$REPO_ROOT/lib/scripts/tracker-legacy.sh"
-set_tracking_context "03-the-ai-observatory" "intermediate"
-track_codespace_initialized
+source "$REPO_ROOT/lib/scripts/tracker.sh"
+set_tracking_context "the-ai-observatory" "intermediate" "03" "02" "2026"
+track_container_initialized

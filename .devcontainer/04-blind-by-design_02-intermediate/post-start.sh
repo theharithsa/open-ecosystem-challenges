@@ -37,9 +37,9 @@ EOF
 
 # Track that the environment is ready
 # shellcheck disable=SC1091
-source "$REPO_ROOT/lib/scripts/tracker-legacy.sh"
-set_tracking_context "blind-by-design" "intermediate"
-track_codespace_initialized
+source "$REPO_ROOT/lib/scripts/tracker.sh"
+set_tracking_context "blind-by-design" "intermediate" "04" "05" "2026"
+track_container_initialized
 
 # Open the relevant files in the connected editor. customizations.codespaces.openFiles
 # is unreliable for dockerComposeFile-based devcontainers (the orchestrator merges

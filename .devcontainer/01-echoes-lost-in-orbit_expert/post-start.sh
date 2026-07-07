@@ -20,4 +20,11 @@ git push
 # Refresh ArgoCD to pick up the new commit
 argocd app get hotrod --refresh
 
+# Track that the environment is ready
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+# shellcheck disable=SC1091
+source "$REPO_ROOT/lib/scripts/tracker.sh"
+set_tracking_context "echoes-lost-in-orbit" "expert" "01" "12" "2025"
+track_container_initialized
+
 lib/argo-rollouts/connect.sh

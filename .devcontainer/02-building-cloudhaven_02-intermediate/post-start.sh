@@ -25,8 +25,9 @@ cd "$CHALLENGE_DIR/modules/district"
 echo "📦 Initializing district module for testing..."
 tofu init
 cd "$CHALLENGE_DIR"
+
 # Track that the environment is ready
 # shellcheck disable=SC1091
-source "$REPO_ROOT/lib/scripts/tracker-legacy.sh"
-set_tracking_context "02-building-cloudhaven" "intermediate"
-track_codespace_initialized
+source "$REPO_ROOT/lib/scripts/tracker.sh"
+set_tracking_context "building-cloudhaven" "intermediate" "02" "01" "2026"
+track_container_initialized

@@ -1,0 +1,49 @@
+# REUSE.toml for off-on-dev/open-source-challenges.
+# Code = MIT, written/curriculum content = CC BY 4.0. No bundled fonts.
+# The existing root LICENSE (MIT) stays as-is; this only adds per-file clarity.
+# The OffOn name/logo are reserved separately — see TRADEMARK.md.
+#
+# License texts live in ./LICENSES/ (MIT.txt, CC-BY-4.0.txt).
+# The reuse.yml Action runs `reuse lint` on every push/PR; if it flags a file,
+# add that path to the closest block below.
+
+version = 1
+
+# --- Source code: MIT ---
+[[annotations]]
+path = [
+  "**/*.sh", "**/*.bash", "**/*.py", "**/*.go", "**/*.java",
+  "**/*.ts", "**/*.tsx", "**/*.js", "**/*.mjs", "**/*.cjs",
+  "**/*.tf", "**/*.tfvars", "**/*.hcl",
+  "Makefile", "**/Makefile", "**/*.mk",
+  "lib/**", "scripts/**", "infra/**",
+]
+SPDX-FileCopyrightText = "OffOn.dev contributors"
+SPDX-License-Identifier = "MIT"
+
+# --- Config, tooling, lockfiles, metadata: MIT ---
+[[annotations]]
+path = [
+  "**/*.json", "**/*.yml", "**/*.yaml", "**/*.toml",
+  "**/*.cfg", "**/*.ini", "**/*.xml", "**/*.ico",
+  ".gitignore", ".gitattributes", ".npmrc", ".nvmrc",
+  ".editorconfig", ".dockerignore", "**/Dockerfile", "**/*.env.example",
+  ".devcontainer/**", ".github/**",
+]
+SPDX-FileCopyrightText = "OffOn.dev contributors"
+SPDX-License-Identifier = "MIT"
+
+# --- Written content, docs, curriculum text: CC BY 4.0 ---
+[[annotations]]
+path = [
+  "**/*.md", "**/*.mdx", "**/*.txt",
+  "adventures/**", "ideas/**",
+]
+SPDX-FileCopyrightText = "OffOn.dev contributors"
+SPDX-License-Identifier = "CC-BY-4.0"
+
+# --- Images / static assets: MIT ---
+[[annotations]]
+path = ["**/*.png", "**/*.svg", "**/*.jpg", "**/*.jpeg", "**/*.webp", "**/*.gif"]
+SPDX-FileCopyrightText = "OffOn.dev contributors"
+SPDX-License-Identifier = "MIT"

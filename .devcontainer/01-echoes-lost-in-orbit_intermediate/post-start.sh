@@ -21,4 +21,11 @@ git push
 argocd app get echo-server-staging --refresh
 argocd app get echo-server-prod --refresh
 
+# Track that the environment is ready
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+# shellcheck disable=SC1091
+source "$REPO_ROOT/lib/scripts/tracker.sh"
+set_tracking_context "echoes-lost-in-orbit" "intermediate" "01" "12" "2025"
+track_container_initialized
+
 lib/argo-rollouts/connect.sh

@@ -1,6 +1,6 @@
-# Open Ecosystem Challenges
+# OffOn Challenges
 
-Welcome to Open Ecosystem Challenges! 🚀
+Welcome to OffOn Challenges! 🚀
 
 These are **hands-on, recurring prompts** designed to help you practice **Cloud Native, OpenTelemetry, AI/ML**, and
 other **open source skills**.

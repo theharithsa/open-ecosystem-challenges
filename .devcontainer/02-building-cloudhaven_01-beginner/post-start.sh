@@ -11,6 +11,7 @@ tofu init
 
 # Track that the environment is ready
 # shellcheck disable=SC1091
-source "$REPO_ROOT/lib/scripts/tracker-legacy.sh"
-track_codespace_initialized
+source "$REPO_ROOT/lib/scripts/tracker.sh"
+set_tracking_context "building-cloudhaven" "beginner" "02" "01" "2026"
+track_container_initialized
 

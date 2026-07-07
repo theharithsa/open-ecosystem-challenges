@@ -5,9 +5,9 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 CHALLENGE_DIR="$REPO_ROOT/adventures/04-blind-by-design/beginner"
 
 # shellcheck disable=SC1091
-source "$REPO_ROOT/lib/scripts/tracker-legacy.sh"
-set_tracking_context "04-blind-by-design" "beginner"
-track_codespace_created
+source "$REPO_ROOT/lib/scripts/tracker.sh"
+set_tracking_context "blind-by-design" "beginner" "04" "05" "2026"
+track_container_created
 
 # Install gum (used by the verify.sh output helpers).
 "$REPO_ROOT/lib/shared/init.sh" --version v0.17.0 # https://github.com/charmbracelet/gum/releases

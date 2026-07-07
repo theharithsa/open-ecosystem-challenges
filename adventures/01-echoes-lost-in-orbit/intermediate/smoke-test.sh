@@ -5,8 +5,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck disable=SC1091
 source "$SCRIPT_DIR/../../../lib/scripts/loader.sh"
-# shellcheck disable=SC1091
-source "$SCRIPT_DIR/../../../lib/scripts/tracker-legacy.sh"
+set_tracking_context "echoes-lost-in-orbit" "intermediate" "01" "12" "2025"
 
 OBJECTIVE="By the end of this level, you should have:
 - Pod info version 6.9.3 deployed successfully in both staging and production environments

@@ -97,7 +97,7 @@ print_test_summary() {
 
   if [[ $TESTS_FAILED -eq 0 ]]; then
     # Track success
-    track_smoketest_completed "success" "$failed_checks_json"
+    track_verification_completed "success" "$failed_checks_json"
 
     # test succeeded
     print_success "✅ PASSED: All $TESTS_PASSED checks passed"
@@ -115,7 +115,7 @@ print_test_summary() {
   fi
 
   # Track failure
-  track_smoketest_completed "failed" "$failed_checks_json"
+  track_verification_completed "failed" "$failed_checks_json"
 
   # test failed
   print_error "❌ FAILED: $TESTS_FAILED check(s) failed, $TESTS_PASSED passed"

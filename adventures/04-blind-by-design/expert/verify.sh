@@ -5,6 +5,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck disable=SC1091
 source "$SCRIPT_DIR/../../../lib/scripts/loader.sh"
+set_tracking_context "blind-by-design" "expert" "04" "05" "2026"
 
 OBJECTIVE="By the end of this level, the lab hits each of these observable outcomes:
 
@@ -224,6 +225,18 @@ else
   fi
 fi
 print_new_line
+
+# Build failed checks JSON array
+failed_checks_json="[]"
+if [[ -n "${FAILED_CHECKS[*]:-}" ]]; then
+  failed_checks_json=$(printf '%s\n' "${FAILED_CHECKS[@]}" | jq -R . | jq -s .)
+fi
+
+if [[ $TESTS_FAILED -ne 0 ]]; then
+  track_verification_completed "failed" "$failed_checks_json"
+else
+  track_verification_completed "success" "$failed_checks_json"
+fi
 
 check_submission_readiness "04-blind-by-design" "expert"
 
