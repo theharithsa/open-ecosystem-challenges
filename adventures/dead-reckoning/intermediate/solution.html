@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dead Reckoning - Intermediate Solution</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f4efe6;
+      --paper: #fffaf2;
+      --ink: #222222;
+      --muted: #5f5a53;
+      --accent: #0d5f86;
+      --accent-2: #176d53;
+      --line: #d8c8af;
+      --ok: #1b7f3b;
+      --warn: #b06f00;
+      --shadow: 0 14px 40px rgba(56, 34, 10, 0.14);
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background:
+        radial-gradient(1200px 600px at 15% -10%, #fff8ea 10%, transparent 70%),
+        radial-gradient(1200px 700px at 90% 0%, #e0efe8 0%, transparent 65%),
+        var(--bg);
+      color: var(--ink);
+      font-family: "Space Grotesk", sans-serif;
+      line-height: 1.55;
+    }
+
+    .wrap {
+      width: min(1080px, 92vw);
+      margin: 42px auto 60px;
+    }
+
+    .hero {
+      position: relative;
+      padding: 28px;
+      border: 2px solid var(--line);
+      border-radius: 24px;
+      background: linear-gradient(145deg, #fffdf9, #f2fbff);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      animation: rise 0.7s ease both;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: auto -60px -80px auto;
+      width: 220px;
+      height: 220px;
+      background: conic-gradient(from 90deg, #72afcf, #d4efff, #4f90b4, #72afcf);
+      opacity: 0.28;
+      border-radius: 50%;
+      filter: blur(2px);
+    }
+
+    .kicker {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 4px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: #fff;
+    }
+
+    h1 {
+      margin: 4px 0 8px;
+      font-size: clamp(1.8rem, 3.4vw, 2.8rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      max-width: 72ch;
+      color: #3f3a35;
+      margin: 0;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .pill {
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid var(--line);
+      font-size: 13px;
+      color: #4b443d;
+    }
+
+    .layout {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--paper);
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: 0 10px 24px rgba(34, 20, 2, 0.07);
+      animation: rise 0.8s ease both;
+    }
+
+    .card h2 {
+      margin: 0 0 8px;
+      font-size: 1.14rem;
+      letter-spacing: -0.01em;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .steps {
+      margin-top: 12px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 30px 1fr;
+      gap: 10px;
+      align-items: start;
+      border: 1px solid #e0d2bb;
+      border-radius: 12px;
+      background: #fffdf8;
+      padding: 10px;
+    }
+
+    .n {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(130deg, var(--accent), #3d91bb);
+      font-size: 14px;
+    }
+
+    .step strong {
+      display: block;
+      margin-bottom: 2px;
+      font-size: 0.97rem;
+    }
+
+    .step span {
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .paths {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .path {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 12.5px;
+      background: #fff;
+      border: 1px dashed #d8c8af;
+      color: #4a433a;
+      border-radius: 10px;
+      padding: 8px;
+      overflow-wrap: anywhere;
+    }
+
+    .terminal {
+      margin-top: 18px;
+      background: #181716;
+      color: #f5f2ed;
+      border-radius: 14px;
+      border: 1px solid #403b35;
+      overflow: hidden;
+      font-family: "IBM Plex Mono", monospace;
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.2);
+      animation: rise 0.95s ease both;
+    }
+
+    .terminal .bar {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      padding: 10px 14px;
+      background: #252220;
+      border-bottom: 1px solid #3d3834;
+      font-size: 12px;
+      color: #c7beb3;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .dot.red { background: #f26a5e; }
+    .dot.yellow { background: #efbe4c; }
+    .dot.green { background: #56c073; }
+
+    pre {
+      margin: 0;
+      white-space: pre-wrap;
+      padding: 14px;
+      font-size: 12.5px;
+      line-height: 1.45;
+    }
+
+    .ok { color: #96f2a2; }
+
+    .grid-2 {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .snippet {
+      background: #fff;
+      border: 1px solid #e3d4be;
+      border-radius: 12px;
+      padding: 12px;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 12.5px;
+      color: #3f3830;
+      min-height: 120px;
+      overflow-x: auto;
+    }
+
+    .snippet-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.03em;
+      color: #5b5248;
+      text-transform: uppercase;
+      margin: 0 0 8px;
+    }
+
+    .status {
+      margin-top: 22px;
+      padding: 16px;
+      border-radius: 14px;
+      border: 1.5px solid #bfd9c4;
+      background: linear-gradient(145deg, #f6fff8, #ecf8ef);
+      color: #1a4b26;
+      box-shadow: 0 8px 20px rgba(12, 88, 34, 0.08);
+      animation: rise 1.05s ease both;
+    }
+
+    .status strong {
+      display: block;
+      font-size: 1.08rem;
+      margin-bottom: 2px;
+    }
+
+    .footer {
+      margin-top: 20px;
+      color: #645d54;
+      font-size: 14px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      border-top: 1px dashed #cbbba2;
+      padding-top: 12px;
+    }
+
+    code {
+      font-family: "IBM Plex Mono", monospace;
+      background: #f6efe2;
+      border: 1px solid #e3d4be;
+      border-radius: 7px;
+      padding: 1px 5px;
+      color: #4e453b;
+      font-size: 0.92em;
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 920px) {
+      .layout,
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .wrap { margin-top: 24px; }
+      .hero { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <span class="kicker">Open Ecosystem Challenges</span>
+      <h1>Dead Reckoning: Intermediate Solution</h1>
+      <p class="subtitle">
+        A visual walkthrough of the final integration fixes: wiring Gitea push
+        payload values into Argo workflow parameters, enabling automated Argo CD
+        reconciliation, adding the Backstage Argo CD annotation, and correcting
+        workflow executor RBAC.
+      </p>
+      <div class="pill-row">
+        <span class="pill">Argo Events Sensor Mapping</span>
+        <span class="pill">ApplicationSet Auto Sync</span>
+        <span class="pill">Backstage Catalog Annotation</span>
+        <span class="pill">Workflow Executor RBAC</span>
+        <span class="pill">6/6 checks passed</span>
+      </div>
+    </section>
+
+    <section class="layout">
+      <article class="card">
+        <h2>What Was Fixed</h2>
+        <p>
+          The intermediate flow had wiring gaps across platform and template
+          manifests. These fixes make the full commissioning pipeline complete
+          from push event to healthy vessel service.
+        </p>
+        <div class="steps">
+          <div class="step">
+            <div class="n">1</div>
+            <div>
+              <strong>Sensor now maps repo name into workflow args</strong>
+              <span>
+                The trigger parameter source in <code>sensor.yaml</code> now sets
+                <code>dataKey: body.repository.name</code>, so
+                <code>repo-name</code> is populated correctly.
+              </span>
+            </div>
+          </div>
+          <div class="step">
+            <div class="n">2</div>
+            <div>
+              <strong>ApplicationSet performs automated sync</strong>
+              <span>
+                Added <code>syncPolicy.automated</code> with
+                <code>prune</code> and <code>selfHeal</code> so vessel apps
+                reconcile without manual actions.
+              </span>
+            </div>
+          </div>
+          <div class="step">
+            <div class="n">3</div>
+            <div>
+              <strong>Scaffolded catalog entity points to Argo app</strong>
+              <span>
+                Added metadata annotation
+                <code>argocd/app-name: &lt;vessel&gt;-deploy</code> in generated
+                <code>catalog-info.yaml</code> so Backstage can show deployment
+                status.
+              </span>
+            </div>
+          </div>
+          <div class="step">
+            <div class="n">4</div>
+            <div>
+              <strong>Workflow executor RBAC allows task result writes</strong>
+              <span>
+                The <code>ci-workflow</code> role now includes
+                <code>create</code> and <code>patch</code> on
+                <code>workflowtaskresults</code>, preventing step failures in
+                Argo Workflows v4.
+              </span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <aside class="card">
+        <h2>Files Changed</h2>
+        <p>Four targeted manifest/template fixes for this level.</p>
+        <div class="paths">
+          <div class="path">platform/argo-events/sensor.yaml</div>
+          <div class="path">platform/argocd/applicationset.yaml</div>
+          <div class="path">platform/argo-workflows/rbac.yaml</div>
+          <div class="path">backstage/templates/vessel-commissioning-template/content/code/catalog-info.yaml</div>
+        </div>
+
+        <div class="terminal">
+          <div class="bar">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            verify.sh
+          </div>
+          <pre><span class="ok">+</span> code + deploy repositories created
+<span class="ok">+</span> vessel catalog entry wired to Argo CD app
+<span class="ok">+</span> delivery workflow completed successfully
+<span class="ok">+</span> Argo CD application synced and healthy
+<span class="ok">+</span> service reachable and returns seaworthy
+
+<span class="ok">PASSED: All 6 verification checks passed.</span></pre>
+        </div>
+      </aside>
+    </section>
+
+    <section class="grid-2">
+      <article class="card">
+        <h2>Act 1: Sensor Trigger Input</h2>
+        <p class="snippet-title">argo-events trigger parameter</p>
+        <div class="snippet">parameters:
+  - src:
+      dependencyName: gitea-push
+      dataKey: body.repository.name
+    dest: spec.arguments.parameters.0.value</div>
+      </article>
+
+      <article class="card">
+        <h2>Act 2: Auto-Reconcile Applications</h2>
+        <p class="snippet-title">applicationset syncPolicy</p>
+        <div class="snippet">syncPolicy:
+  automated:
+    prune: true
+    selfHeal: true
+  syncOptions:
+    - CreateNamespace=true</div>
+      </article>
+
+      <article class="card">
+        <h2>Act 3: Backstage Deployment Link</h2>
+        <p class="snippet-title">component metadata annotation</p>
+        <div class="snippet">metadata:
+  name: ${{ values.name }}
+  annotations:
+    argocd/app-name: ${{ values.name }}-deploy</div>
+      </article>
+
+      <article class="card">
+        <h2>Act 4: Workflow Executor RBAC</h2>
+        <p class="snippet-title">ci-workflow role permissions</p>
+        <div class="snippet">rules:
+  - apiGroups: [argoproj.io]
+    resources: [workflowtaskresults]
+    verbs: [create, patch, get, list, watch]</div>
+      </article>
+    </section>
+
+    <section class="status">
+      <strong>Result</strong>
+      Intermediate delivery now runs end-to-end: push events trigger build and
+      deploy workflows, Argo CD converges to the new image tag, Backstage can
+      identify the vessel application, and the vessel responds with a seaworthy
+      status.
+    </section>
+
+    <section class="footer">
+      <span>Challenge: Dead Reckoning / Intermediate</span>
+      <span>Outcome: 6 of 6 checks passing</span>
+    </section>
+  </main>
+</body>
+</html>
