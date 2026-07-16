@@ -33,6 +33,7 @@ type bizEvent struct {
 	GithubRepo      string   `json:"github.repository,omitempty"`
 	Status          string   `json:"verification.status,omitempty"`
 	FailedChecks    []string `json:"verification.failed_checks,omitempty"`
+	ExternalSource  string   `json:"external.source,omitempty"`
 }
 
 func (e *bizEvent) validate() string {

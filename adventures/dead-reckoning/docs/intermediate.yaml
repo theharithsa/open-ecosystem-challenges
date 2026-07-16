@@ -77,10 +77,9 @@ architecture:
     `argocd/`) and the vessel commissioning template under
     `backstage/templates/vessel-commissioning-template/`.
   - >-
-    This level runs a real container build on a Kubernetes cluster. It works on the default Codespace, but if you
-    hit resource problems or the pipeline feels sluggish, upgrade to a larger (**4-core / 16 GB**) machine. Either
-    way, give the pipeline a few minutes after commissioning: the first build pulls its base images before an image
-    ever reaches the cluster.
+    This level runs a real container build on a Kubernetes cluster, so your Codespace provisions on a larger
+    (**4-core / 16 GB**) machine by default. Give the pipeline a few minutes after commissioning: the first build
+    pulls its base images before an image ever reaches the cluster.
   - >-
     > A quick translation from the story to the tools: a **vessel** is a small service you deploy, made up of its
     code repository, its deployment manifests, and the running Deployment and Service in the cluster. The
@@ -202,3 +201,5 @@ helpful_links:
   - title: "Argo CD: Automated Sync"
     url: "https://argo-cd.readthedocs.io/en/stable/user-guide/auto_sync/"
     description: "How Argo CD reconciles an Application's desired state into the cluster"
+
+codespaces_machine: 4core

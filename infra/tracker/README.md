@@ -4,6 +4,8 @@ A Cloud Run service that receives bizevent payloads from challenge Codespaces an
 
 It validates that every incoming event has `type: offon.challenge`, a known `action`, and all required fields (`adventure.name`, `adventure.level`, `adventure.number`, `adventure.month`, `adventure.year`, `session.id`) before ingesting. Anything else is rejected with a 400.
 
+`external.source` is an optional field that identifies events coming from a repo that copied these challenges. It's absent/null for events from this repo.
+
 ## Deployment
 
 Deployed manually via the Google Cloud CLI. One-time secret setup:
@@ -24,7 +26,7 @@ gcloud run deploy offon-challenge-tracker \
   --source infra/tracker \
   --region europe-west1 \
   --allow-unauthenticated \
-  --set-env-vars DT_TENANT_URL=<your-tenant-url> \
+  --set-env-vars DT_TENANT_URL=https://nfu4071h.sprint.dynatracelabs.com \
   --set-secrets DT_API_TOKEN=offon-challenge-tracker-dt-api-token:latest
 ```
 

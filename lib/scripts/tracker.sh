@@ -4,6 +4,8 @@
 TRACKER_URL="https://offon-challenge-tracker-291758365471.europe-west1.run.app"
 EVENT_TYPE="offon.challenge"
 SESSION_ID_FILE="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)/.offon-session-id"
+# Set OFFON_EXTERNAL_SOURCE to tag events from a repo that copied these challenges
+# Left unset here, so this repo's events omit the field.
 
 # -----------------------------------------------------------------------------
 # Set tracking context and ensure a session ID exists
@@ -49,6 +51,7 @@ send_event() {
     --arg adventure_number "${ADVENTURE_NUMBER:-}" \
     --arg publish_month "${PUBLISH_MONTH:-}" \
     --arg publish_year "${PUBLISH_YEAR:-}" \
+    --arg external_source "${OFFON_EXTERNAL_SOURCE:-}" \
     --argjson extra "$extra_fields" \
     '{
       "type": $event_type,
@@ -61,7 +64,9 @@ send_event() {
       "session.id": $session_id,
       "github.username": $github_user,
       "github.repository": $github_repo
-    } + $extra'
+    }
+    + (if $external_source != "" then {"external.source": $external_source} else {} end)
+    + $extra'
   )
 
   curl -sS -X POST "$TRACKER_URL" \

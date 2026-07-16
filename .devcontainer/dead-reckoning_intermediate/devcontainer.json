@@ -2,6 +2,10 @@
   "name": "🧭 Dead Reckoning | 🟡 Intermediate (Sea Trial)",
   "image": "mcr.microsoft.com/devcontainers/base:bullseye",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/adventures/dead-reckoning/intermediate",
+  "hostRequirements": {
+    "cpus": 4,
+    "memory": "16gb"
+  },
   "features": {
     "ghcr.io/devcontainers/features/docker-in-docker:2": {},
     "ghcr.io/devcontainers/features/node:1": {
