@@ -3,6 +3,8 @@ kind: Component
 metadata:
   name: ${{ values.name }}
   description: "${{ values.description }}"
+  annotations:
+    argocd/app-name: ${{ values.name }}-deploy
   links:
     # Surfaced in the Links card on the vessel's page. The code repo is already
     # reachable via "View Source"; this adds its deployment repository.

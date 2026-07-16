@@ -47,5 +47,8 @@ spec:
       # image, with no one clicking "sync". (It briefly runs the ":pending" image
       # until the first build pushes a real tag.)
       syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
         syncOptions:
           - CreateNamespace=true

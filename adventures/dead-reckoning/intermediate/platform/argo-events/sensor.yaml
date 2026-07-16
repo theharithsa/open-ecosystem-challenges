@@ -58,6 +58,7 @@ spec:
                 # which field to pull out, so repo-name never gets set. It needs
                 # the field of the push event that names the repository (the
                 # mapping below reads the very same field).
+                dataKey: body.repository.name
               dest: spec.arguments.parameters.0.value
             # ...and onto the "vessel" label the Backstage card filters on.
             - src:
