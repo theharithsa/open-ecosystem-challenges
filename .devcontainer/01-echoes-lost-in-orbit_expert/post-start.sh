@@ -2,8 +2,12 @@
 set -e
 
 echo "✨ Starting level 3 - Expert"
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+# shellcheck disable=SC1091
+source "$REPO_ROOT/lib/scripts/repository-url.sh"
 
-REPO_URL="https://github.com/${GITHUB_REPOSITORY}.git"
+REPO_URL="$(get_repository_url)"
+echo "Using repository URL: $REPO_URL"
 sed -i "s|__REPO_URL__|${REPO_URL}|g" adventures/01-echoes-lost-in-orbit/expert/manifests/appset.yaml
 
 kubectl apply -n argocd -f adventures/01-echoes-lost-in-orbit/expert/manifests/appset.yaml
@@ -21,7 +25,6 @@ git push
 argocd app get hotrod --refresh
 
 # Track that the environment is ready
-REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 # shellcheck disable=SC1091
 source "$REPO_ROOT/lib/scripts/tracker.sh"
 set_tracking_context "echoes-lost-in-orbit" "expert" "01" "12" "2025"
