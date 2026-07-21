@@ -182,6 +182,12 @@ spec:
         description: ${{ parameters.description }}
         defaultBranch: main
         sourcePath: ./code
+        # The CI workflow is triggered by pushes to the code repo, so carry the
+        # commission traceparent on THIS commit for the Sensor to read.
+        gitCommitMessage: |
+          Commission ${{ parameters.name }} code
+
+          Traceparent: ${{ steps['trace-start'].output.traceparent }}
 
     # Enter the vessel into the fleet registry: register the code repo's
     # catalog-info.yaml in the catalog. Only the code repo is registered as a
