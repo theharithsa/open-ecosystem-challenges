@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dead Reckoning - Expert Solution</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f4efe6;
+      --paper: #fffaf2;
+      --ink: #222222;
+      --muted: #5f5a53;
+      --accent: #0d5f86;
+      --accent-2: #176d53;
+      --line: #d8c8af;
+      --ok: #1b7f3b;
+      --warn: #b06f00;
+      --shadow: 0 14px 40px rgba(56, 34, 10, 0.14);
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background:
+        radial-gradient(1200px 600px at 15% -10%, #fff8ea 10%, transparent 70%),
+        radial-gradient(1200px 700px at 90% 0%, #e0efe8 0%, transparent 65%),
+        var(--bg);
+      color: var(--ink);
+      font-family: "Space Grotesk", sans-serif;
+      line-height: 1.55;
+    }
+
+    .wrap {
+      width: min(1080px, 92vw);
+      margin: 42px auto 60px;
+    }
+
+    .hero {
+      position: relative;
+      padding: 28px;
+      border: 2px solid var(--line);
+      border-radius: 24px;
+      background: linear-gradient(145deg, #fffdf9, #f2fbff);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      animation: rise 0.7s ease both;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: auto -60px -80px auto;
+      width: 220px;
+      height: 220px;
+      background: conic-gradient(from 90deg, #72afcf, #d4efff, #4f90b4, #72afcf);
+      opacity: 0.28;
+      border-radius: 50%;
+      filter: blur(2px);
+    }
+
+    .kicker {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 4px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: #fff;
+    }
+
+    h1 {
+      margin: 4px 0 8px;
+      font-size: clamp(1.8rem, 3.4vw, 2.8rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      max-width: 72ch;
+      color: #3f3a35;
+      margin: 0;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .pill {
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid var(--line);
+      font-size: 13px;
+      color: #4b443d;
+    }
+
+    .layout {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--paper);
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: 0 10px 24px rgba(34, 20, 2, 0.07);
+      animation: rise 0.8s ease both;
+    }
+
+    .card h2 {
+      margin: 0 0 8px;
+      font-size: 1.14rem;
+      letter-spacing: -0.01em;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .steps {
+      margin-top: 12px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 30px 1fr;
+      gap: 10px;
+      align-items: start;
+      border: 1px solid #e0d2bb;
+      border-radius: 12px;
+      background: #fffdf8;
+      padding: 10px;
+    }
+
+    .n {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(130deg, var(--accent), #3d91bb);
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .step strong {
+      display: block;
+      margin-bottom: 2px;
+      font-size: 0.97rem;
+    }
+
+    .step span {
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .step code {
+      background: #f5f0e3;
+      padding: 2px 5px;
+      border-radius: 4px;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.9em;
+    }
+
+    .paths {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .path {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 12.5px;
+      background: #fff;
+      border: 1px dashed #d8c8af;
+      color: #4a433a;
+      border-radius: 10px;
+      padding: 8px;
+      overflow-wrap: anywhere;
+    }
+
+    .terminal {
+      margin-top: 18px;
+      background: #181716;
+      color: #f5f2ed;
+      border-radius: 14px;
+      border: 1px solid #403b35;
+      overflow: hidden;
+    }
+
+    .bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 10px;
+      background: #0d0c0a;
+      border-bottom: 1px solid #403b35;
+      font-size: 11px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .dot.red { background: #ec6b56; }
+    .dot.yellow { background: #fcc02e; }
+    .dot.green { background: #61c554; }
+
+    pre {
+      margin: 0;
+      padding: 10px;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 12px;
+      line-height: 1.4;
+      overflow-x: auto;
+    }
+
+    .ok {
+      color: #61c554;
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <span class="kicker">Open Ecosystem Challenges</span>
+      <h1>Dead Reckoning: Expert Solution</h1>
+      <p class="subtitle">
+        A visual walkthrough of the distributed tracing and cargo verification fixes: 
+        propagating W3C traceparent through git commits across async pipeline boundaries, 
+        and aligning service environment variables to report commissioned provisions correctly.
+      </p>
+      <div class="pill-row">
+        <span class="pill">Distributed Tracing Context</span>
+        <span class="pill">W3C Traceparent Propagation</span>
+        <span class="pill">Provisions Alignment</span>
+        <span class="pill">Async Pipeline Continuity</span>
+        <span class="pill">2/2 checks passed</span>
+      </div>
+    </section>
+
+    <section class="layout">
+      <article class="card">
+        <h2>What Was Fixed</h2>
+        <p>
+          The expert level required end-to-end distributed tracing across an asynchronous 
+          event-driven pipeline, and verified that commissioned vessels report the correct cargo. 
+          Two critical fixes make the full voyage visible in Jaeger while ensuring manifest accuracy.
+        </p>
+        <div class="steps">
+          <div class="step">
+            <div class="n">1</div>
+            <div>
+              <strong>Traceparent embedded in code repo commit message</strong>
+              <span>
+                The scaffolder template now includes 
+                <code>gitCommitMessage</code> with 
+                <code>Traceparent: ${{ steps['trace-start'].output.traceparent }}</code> 
+                on the code repository push. The Argo Events Sensor extracts this trailer 
+                and threads it into the workflow so CI and Argo CD spans join the commission trace.
+              </span>
+            </div>
+          </div>
+          <div class="step">
+            <div class="n">2</div>
+            <div>
+              <strong>Service reads PROVISIONS env var (not CARGO)</strong>
+              <span>
+                The generated Go service in 
+                <code>main.go</code> now correctly reads 
+                <code>os.Getenv("PROVISIONS")</code> instead of 
+                <code>"CARGO"</code>, matching what the deployment manifest declares and allowing 
+                the vessel to report accurate commissioned cargo.
+              </span>
+            </div>
+          </div>
+          <div class="step">
+            <div class="n">3</div>
+            <div>
+              <strong>Backstage trace opens with captain's form time</strong>
+              <span>
+                The <code>dr:trace-start</code> action uses 
+                <code>enterStart</code> to back-date the root span, so the trace begins with 
+                the captain filling the commission form, not the scaffolder's first action.
+              </span>
+            </div>
+          </div>
+          <div class="step">
+            <div class="n">4</div>
+            <div>
+              <strong>Trace spans reconstructed from task logs</strong>
+              <span>
+                The <code>dr:trace-finish</code> action reads the scaffolder's task log, 
+                emits one span per work step under the root, and closes the trace. This keeps 
+                template steps ordinary untraced actions while still capturing their timing.
+              </span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <aside class="card">
+        <h2>Files Changed</h2>
+        <p>Two targeted fixes: trace propagation and provisions alignment.</p>
+        <div class="paths">
+          <div class="path">backstage/templates/vessel-commissioning-template/template.yaml</div>
+          <div class="path">backstage/templates/vessel-commissioning-template/content/code/main.go</div>
+        </div>
+
+        <div class="terminal">
+          <div class="bar">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            verify.sh
+          </div>
+          <pre><span class="ok">✓</span> commission trace is connected (backstage → argo-workflows → argocd)
+<span class="ok">✓</span> vessel sails with commissioned cargo (provisions match)
+<span class="ok">✓</span> all 2 verification checks passed</pre>
+        </div>
+      </aside>
+    </section>
+  </main>
+</body>
+</html>
